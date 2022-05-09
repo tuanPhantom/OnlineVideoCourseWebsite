@@ -9,13 +9,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using _V2__OnlineVideoCourseWebstie.Models;
+using _V2__OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace _V2__OnlineVideoCourseWebstie.Areas.Identity.Pages.Account
+namespace _V2__OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
 {
     public class LoginWith2faModel : PageModel
     {

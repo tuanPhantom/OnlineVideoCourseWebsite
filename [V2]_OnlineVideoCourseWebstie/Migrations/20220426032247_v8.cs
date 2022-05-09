@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace _V2__OnlineVideoCourseWebstie.Migrations
+namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     public partial class v8 : Migration
     {

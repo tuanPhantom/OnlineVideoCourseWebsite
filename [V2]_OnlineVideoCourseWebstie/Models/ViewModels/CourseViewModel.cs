@@ -1,4 +1,4 @@
-﻿namespace _V2__OnlineVideoCourseWebstie.Models.ViewModels
+﻿namespace _V2__OnlineVideoCourseWebsite.Models.ViewModels
 {
     public class CourseViewModel
     {

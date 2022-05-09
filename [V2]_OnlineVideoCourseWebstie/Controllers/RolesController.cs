@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebstie.Data;
-using _V2__OnlineVideoCourseWebstie.Models;
+using _V2__OnlineVideoCourseWebsite.Data;
+using _V2__OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
-namespace _V2__OnlineVideoCourseWebstie.Controllers
+namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

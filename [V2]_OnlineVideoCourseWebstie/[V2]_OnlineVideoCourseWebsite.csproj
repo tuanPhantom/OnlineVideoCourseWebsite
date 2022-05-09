@@ -4,13 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-_V2__OnlineVideoCourseWebstie-B9FD6016-FFD4-41DA-8E9D-B17188B53E06</UserSecretsId>
-    <RootNamespace>_V2__OnlineVideoCourseWebstie</RootNamespace>
+    <UserSecretsId>aspnet-_V2__OnlineVideoCourseWebsite-B9FD6016-FFD4-41DA-8E9D-B17188B53E06</UserSecretsId>
+    <RootNamespace>_V2__OnlineVideoCourseWebsite</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
     <None Include="Views\Shared\Error.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml" />
     <None Include="Views\Shared\_LoginPartial.cshtml" />

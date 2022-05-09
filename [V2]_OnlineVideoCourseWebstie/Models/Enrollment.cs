@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace _V2__OnlineVideoCourseWebstie.Models
+namespace _V2__OnlineVideoCourseWebsite.Models
 {
     public class Enrollment
     {

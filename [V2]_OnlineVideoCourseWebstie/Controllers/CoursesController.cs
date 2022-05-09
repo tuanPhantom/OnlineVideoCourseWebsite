@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebstie.Data;
-using _V2__OnlineVideoCourseWebstie.Models;
-using _V2__OnlineVideoCourseWebstie.Models.ViewModels;
+using _V2__OnlineVideoCourseWebsite.Data;
+using _V2__OnlineVideoCourseWebsite.Models;
+using _V2__OnlineVideoCourseWebsite.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
-namespace _V2__OnlineVideoCourseWebstie.Controllers
+namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
     public class CoursesController : Controller
     {
@@ -28,6 +29,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         }
 
         // GET: Courses/Details/5
+        [Authorize(Roles = "Admin,Instructor,Student")]
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
@@ -88,6 +90,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Create()
         {
             return View();
@@ -98,6 +101,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Create([Bind("CourseId,Title,Description,ImageUrl,MarqueeImageUrl")] Course course)
         {
             if (ModelState.IsValid)
@@ -110,6 +114,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
@@ -130,6 +135,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Edit(long id, [Bind("CourseId,Title,Description,ImageUrl,MarqueeImageUrl")] Course course)
         {
             if (id != course.CourseId)
@@ -161,6 +167,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Delete(long? id)
         {
             if (id == null)
@@ -181,6 +188,7 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var course = await _context.Course.FindAsync(id);

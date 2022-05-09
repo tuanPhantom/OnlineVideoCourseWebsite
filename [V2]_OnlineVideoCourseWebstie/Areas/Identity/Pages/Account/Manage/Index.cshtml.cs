@@ -6,12 +6,12 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using _V2__OnlineVideoCourseWebstie.Models;
+using _V2__OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace _V2__OnlineVideoCourseWebstie.Areas.Identity.Pages.Account.Manage
+namespace _V2__OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
 {
     public class IndexModel : PageModel
     {

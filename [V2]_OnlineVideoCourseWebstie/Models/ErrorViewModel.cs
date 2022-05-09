@@ -1,4 +1,4 @@
-namespace _V2__OnlineVideoCourseWebstie.Models
+namespace _V2__OnlineVideoCourseWebsite.Models
 {
     public class ErrorViewModel
     {
