@@ -1,0 +1,28 @@
+﻿@model IEnumerable<_V2__OnlineVideoCourseWebstie.Models.Course>
+
+@{
+	ViewData["Title"] = "Index";
+}
+<h1><b>Dashboard</b></h1>
+<p>
+	<a class="btn btn-primary" asp-action="Create">Create New Course</a>
+</p>
+		<div class="container">
+<div class="row">
+	@foreach (var item in Model)
+	{
+	<div class="col-sm">
+		<div class="card" style="width: 18rem;">
+			<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="210" height="230" class="card-img-top" alt="...">
+			<div class="card-body">
+				<h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+				<p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+				<a asp-action="Details" asp-route-id="@item.CourseId" type="button" class="btn btn-success">View Course</a>
+				<a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.CourseId">Edit</a>
+				<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+			</div>
+		</div>
+	</div>	
+	}
+	</div>
+</div>
