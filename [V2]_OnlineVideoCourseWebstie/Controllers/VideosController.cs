@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _V2__OnlineVideoCourseWebstie.Data;
 using _V2__OnlineVideoCourseWebstie.Models;
+using _V2__OnlineVideoCourseWebstie.Models.ViewModels;
 
 namespace _V2__OnlineVideoCourseWebstie.Controllers
 {
@@ -41,7 +42,18 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
                 return NotFound();
             }
 
-            return View(video);
+            var course = await _context.Course
+              .Include(m => m.Topics).Include("Topics.TopicVideos")
+              .Include("Topics.TopicVideos.Video")
+              .FirstOrDefaultAsync();
+
+            var videoViewModel = new VideoViewModel()
+            {
+                Course = course,
+                Video = video
+            };
+
+            return View(videoViewModel);
         }
 
         // GET: Videos1/Create
