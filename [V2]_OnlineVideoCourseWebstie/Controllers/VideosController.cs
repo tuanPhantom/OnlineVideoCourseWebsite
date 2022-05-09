@@ -21,13 +21,13 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
             _context = context;
         }
 
-        // GET: Videos1
+        // GET: Videos
         public async Task<IActionResult> Index()
         {
             return View(await _context.Video.ToListAsync());
         }
 
-        // GET: Videos1/Details/5
+        // GET: Videos/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
