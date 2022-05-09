@@ -39,36 +39,44 @@ namespace _V2__OnlineVideoCourseWebstie.Controllers
                 .Include(m => m.Topics).Include("Topics.TopicVideos")
                 .Include("Topics.TopicVideos.Video")
                 .FirstOrDefaultAsync();
+
+            //var course = await _context.Course.FindAsync(id);
+
             if (course == null)
             {
                 return NotFound();
             }
 
-
-            
-
             //foreach (var topic in _context.Topic)
             //{
             //    if (topic.CourseId == course.CourseId)
             //    {
-            //        foreach (var topicVideo in _context.TopicVideo)
+            //        foreach (var topicvideo in _context.TopicVideo)
             //        {
-            //            if (topicVideo.TopicId == topic.TopicId)
+            //            if (topicvideo.TopicId == topic.TopicId)
             //            {
-            //                topicVideo.Topic = topic;
             //                foreach (var video in _context.Video)
             //                {
-            //                    if (video.VideoId == topicVideo.VideoId)
+            //                    if (video.VideoId == topicvideo.VideoId)
             //                    {
-            //                        topicVideo.Video = video;
+            //                        if (!topic.TopicVideos.Contains(topicvideo))
+            //                        {
+            //                            topicvideo.Video = video;
+            //                            topicvideo.Topic = topic;
+            //                            topic.TopicVideos.Add(topicvideo);
+            //                        }
+            //                        if (!course.Topics.Contains(topic))
+            //                        {
+            //                            course.Topics.Add(topic);
+            //                        }
+            //                        break;
             //                    }
             //                }
-            //                topic.TopicVideos.Add(topicVideo);
             //            }
             //        }
-            //        course.Topics.Add(topic);
             //    }
             //}
+
 
             // inject to viewModels
             var courseViewModel = new CourseViewModel()
