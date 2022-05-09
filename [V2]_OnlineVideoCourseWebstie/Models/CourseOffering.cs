@@ -12,7 +12,7 @@ namespace _V2__OnlineVideoCourseWebsite.Models
         public int Year { get; set; }
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? OpenDate { get; set; }
-        List<Enrollment> EnrollmentList { get; set; } = new List<Enrollment>();
+        public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
         public long? CourseId { get; set; }
         public Course? Course { get; set; }
     }

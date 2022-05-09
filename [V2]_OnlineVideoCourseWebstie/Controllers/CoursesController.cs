@@ -10,16 +10,22 @@ using _V2__OnlineVideoCourseWebsite.Data;
 using _V2__OnlineVideoCourseWebsite.Models;
 using _V2__OnlineVideoCourseWebsite.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<CoursesController> _logger;
+        private readonly UserManager<User> _userManager;
 
-        public CoursesController(ApplicationDbContext context)
+        public CoursesController(ILogger<CoursesController> logger, ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _logger = logger;
+            _userManager = userManager;
         }
 
         // GET: Courses
@@ -32,6 +38,24 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         [Authorize(Roles = "Admin,Instructor,Student")]
         public async Task<IActionResult> Details(long? id)
         {
+            string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var currentUser = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
+
+            if (userId == null || currentUser == null)
+            {
+                return NotFound();
+            }
+
+            var enrollment = await _context.Enrollment.Where(m => m.User == currentUser)
+                .Where(m => m.CourseOffering.CourseId == id)
+                .FirstOrDefaultAsync();
+
+            if (enrollment == null)
+            {
+                EnrollmentsController enrollmentsController = new EnrollmentsController(_context);
+                return Redirect("/Enrollments/Create");
+            }
+
             if (id == null)
             {
                 return NotFound();
@@ -78,7 +102,6 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             //        }
             //    }
             //}
-
 
             // inject to viewModels
             var courseViewModel = new CourseViewModel()

@@ -8,11 +8,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _V2__OnlineVideoCourseWebsite.Data;
 using _V2__OnlineVideoCourseWebsite.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
-    [Authorize(Roles = "Admin,Instructor,Student")]
     public class EnrollmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,7 +23,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: Enrollments
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Enrollment.Include(e => e.CourseOffering);
+            var applicationDbContext = _context.Enrollment.Include(e => e.CourseOffering).Include(e => e.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -39,6 +37,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
 
             var enrollment = await _context.Enrollment
                 .Include(e => e.CourseOffering)
+                .Include(e => e.User)
                 .FirstOrDefaultAsync(m => m.EnrollmentId == id);
             if (enrollment == null)
             {
@@ -52,6 +51,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         public IActionResult Create()
         {
             ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
@@ -69,6 +69,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -86,6 +87,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 return NotFound();
             }
             ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -122,6 +124,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -135,6 +138,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
 
             var enrollment = await _context.Enrollment
                 .Include(e => e.CourseOffering)
+                .Include(e => e.User)
                 .FirstOrDefaultAsync(m => m.EnrollmentId == id);
             if (enrollment == null)
             {

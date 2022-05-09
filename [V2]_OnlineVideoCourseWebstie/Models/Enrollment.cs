@@ -9,7 +9,7 @@ namespace _V2__OnlineVideoCourseWebsite.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long EnrollmentId { get; set; }
         public int? Grade { get; set; }
-        public long? UserId { get; set; }
+        public String? UserId { get; set; }
         public User? User { get; set; }
         public long? CourseOfferingId { get; set; }
         public CourseOffering? CourseOffering { get; set; }
