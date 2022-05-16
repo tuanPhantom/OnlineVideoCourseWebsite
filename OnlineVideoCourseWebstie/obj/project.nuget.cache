@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VX27eH/051aJ1zxkT/SLV6cqjfYndWkHMcRytzrZ0WTiK6HUD/n0ECDfdaX7nP3PKTr+ba353xuhxbxaRY7iFg==",
+  "dgSpecHash": "lajgeTRG2UZ2tmRCRYAY//0j3ZBJoRQJyicPVaShhfIjCfL9rRCjeUKthXbr6cy40dccm7rW/6P0YvAMW6W4ww==",
   "success": true,
-  "projectFilePath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
+  "projectFilePath": "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Tuan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Tuan\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",

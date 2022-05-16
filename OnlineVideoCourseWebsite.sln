@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineVideoCourseWebsite", "[V2]_OnlineVideoCourseWebstie\OnlineVideoCourseWebsite.csproj", "{861E11A8-6712-40F9-9421-BFD52675ED4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineVideoCourseWebsite", "OnlineVideoCourseWebstie\OnlineVideoCourseWebsite.csproj", "{861E11A8-6712-40F9-9421-BFD52675ED4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

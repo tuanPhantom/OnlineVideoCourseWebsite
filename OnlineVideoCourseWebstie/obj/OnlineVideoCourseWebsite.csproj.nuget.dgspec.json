@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj": {}
+    "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj": {}
   },
   "projects": {
-    "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj": {
+    "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
+        "projectUniqueName": "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
         "projectName": "OnlineVideoCourseWebsite",
-        "projectPath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
+        "projectPath": "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
         "packagesPath": "C:\\Users\\Tuan\\.nuget\\packages\\",
-        "outputPath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\obj\\",
+        "outputPath": "D:\\workspace\\vs workspace\\ss2\\OnlineVideoCourseWebsite\\OnlineVideoCourseWebstie\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Tuan\\AppData\\Roaming\\NuGet\\NuGet.Config",

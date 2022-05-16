@@ -12,7 +12,7 @@ using System;
 using System.Reflection;
 
 [assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-_V2__OnlineVideoCourseWebsite-B9FD6016-FFD4-41DA-8E9D-B17188B53E06")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("aspnet-OnlineVideoCourseWebsite-B9FD6016-FFD4-41DA-8E9D-B17188B53E06")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("OnlineVideoCourseWebsite")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
