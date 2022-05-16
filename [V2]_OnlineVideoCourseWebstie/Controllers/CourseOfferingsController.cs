@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 
-namespace _V2__OnlineVideoCourseWebsite.Controllers
+namespace OnlineVideoCourseWebsite.Controllers
 {
     public class CourseOfferingsController : Controller
     {
@@ -57,7 +57,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseOfferingId,Year,CreatedDate,OpenDate,CourseId")] CourseOffering courseOffering)
+        public async Task<IActionResult> Create([Bind("CourseOfferingId,Year,OpenDate,CourseId")] CourseOffering courseOffering)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("CourseOfferingId,Year,CreatedDate,OpenDate,CourseId")] CourseOffering courseOffering)
+        public async Task<IActionResult> Edit(long id, [Bind("CourseOfferingId,Year,OpenDate,CourseId")] CourseOffering courseOffering)
         {
             if (id != courseOffering.CourseOfferingId)
             {

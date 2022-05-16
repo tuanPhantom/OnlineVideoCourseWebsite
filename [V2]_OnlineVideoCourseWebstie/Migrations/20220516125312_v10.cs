@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
-    public partial class reborn : Migration
+    public partial class v10 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -329,17 +329,17 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "3b9d10ca-610c-4003-8bd7-81b3d4b4713d", "Admin", "ADMIN" });
+                values: new object[] { "1", "8824947a-504a-4967-a92c-7eadbba69411", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2", "04a34dfe-3c82-4db8-969d-2d520830c9ba", "Teacher", "TEACHER" });
+                values: new object[] { "2", "04fd53fa-e9b3-4443-8b71-288fd9b404e6", "Teacher", "TEACHER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3", "efbe954c-1d30-4ee3-adb6-e6fe5e20db50", "Student", "STUDENT" });
+                values: new object[] { "3", "7f40e46c-db38-4ece-84b1-890dec924a5b", "Student", "STUDENT" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

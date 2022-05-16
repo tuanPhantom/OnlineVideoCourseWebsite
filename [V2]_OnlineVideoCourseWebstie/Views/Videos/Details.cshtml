@@ -1,4 +1,4 @@
-﻿@model _V2__OnlineVideoCourseWebsite.Models.ViewModels.VideoViewModel
+﻿@model OnlineVideoCourseWebsite.Models.ViewModels.VideoViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -65,6 +65,17 @@
         {
             <partial name="_VideoPlayerPartial" model="@Model" />
         }
+        @if (Model.Resources != null && Model.Resources.Count > 0)
+                {
+
+                    <hr class="no-margin">
+                    <div class="card-body no-bottom-padding">
+                        <h5>Resources</h5>
+                    </div>
+                    <div class="card-body no-top-padding">
+                        <partial name="_ModuleResourcesPartial" model="@Model.Resources" />
+                    </div>
+                }
     </div>
 </div>
 

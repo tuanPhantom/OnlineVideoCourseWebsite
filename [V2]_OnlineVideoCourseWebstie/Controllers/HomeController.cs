@@ -1,10 +1,10 @@
-﻿using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
+﻿using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
-namespace _V2__OnlineVideoCourseWebstie.Controllers
+namespace OnlineVideoCourseWebstie.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,5 +1,5 @@
-﻿@model  _V2__OnlineVideoCourseWebsite.Models.ViewModels.CourseViewModel
-@using _V2__OnlineVideoCourseWebsite.Models 
+﻿@model  OnlineVideoCourseWebsite.Models.ViewModels.CourseViewModel
+@using OnlineVideoCourseWebsite.Models 
 
 @{
     ViewData["Title"] = "Details";
@@ -69,7 +69,7 @@
                         <h5>Resources</h5>
                     </div>
                     <div class="card-body no-top-padding">
-                        <partial name="_ModuleDownloadsPartial" model="@topic.Resources" />
+                        <partial name="_ModuleResourcesPartial" model="@topic.Resources" />
                     </div>
                 }
             </div>

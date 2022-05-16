@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using _V2__OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Data;
 
 #nullable disable
 
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220515220812_reborn")]
-    partial class reborn
+    [Migration("20220516125312_v10")]
+    partial class v10
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,305 +23,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Comment", b =>
-                {
-                    b.Property<long>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CommentId"), 1L, 1);
-
-                    b.Property<string>("CommentText")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<long?>("VideoId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("CommentId");
-
-                    b.HasIndex("UserId1");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Course", b =>
-                {
-                    b.Property<long>("CourseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CourseId"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("MarqueeImageUrl")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("nvarchar(80)");
-
-                    b.HasKey("CourseId");
-
-                    b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", b =>
-                {
-                    b.Property<long>("CourseOfferingId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CourseOfferingId"), 1L, 1);
-
-                    b.Property<long?>("CourseId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("OpenDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("CourseOfferingId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("CourseOffering");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Enrollment", b =>
-                {
-                    b.Property<long>("EnrollmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EnrollmentId"), 1L, 1);
-
-                    b.Property<long?>("CourseOfferingId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int?>("Grade")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("EnrollmentId");
-
-                    b.HasIndex("CourseOfferingId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Enrollment");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Resource", b =>
-                {
-                    b.Property<long>("ResourceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ResourceId"), 1L, 1);
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("TopicId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ResourceId");
-
-                    b.HasIndex("TopicId");
-
-                    b.ToTable("Resource");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>
-                {
-                    b.Property<long>("TopicId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicId"), 1L, 1);
-
-                    b.Property<long?>("CourseOfferingId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TopicId");
-
-                    b.HasIndex("CourseOfferingId");
-
-                    b.ToTable("Topic");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.TopicVideo", b =>
-                {
-                    b.Property<long>("TopicVideoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicVideoId"), 1L, 1);
-
-                    b.Property<long?>("TopicId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("VideoId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("TopicVideoId");
-
-                    b.HasIndex("TopicId");
-
-                    b.HasIndex("VideoId");
-
-                    b.ToTable("TopicVideo");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.User", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Thumbnail")
-                        .HasMaxLength(1024)
-                        .HasColumnType("nvarchar(1024)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Video", b =>
-                {
-                    b.Property<long>("VideoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("VideoId"), 1L, 1);
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("Duration")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Thumbnail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("URL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("VideoId");
-
-                    b.ToTable("Video");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -353,21 +54,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "3b9d10ca-610c-4003-8bd7-81b3d4b4713d",
+                            ConcurrencyStamp = "8824947a-504a-4967-a92c-7eadbba69411",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "04a34dfe-3c82-4db8-969d-2d520830c9ba",
+                            ConcurrencyStamp = "04fd53fa-e9b3-4443-8b71-288fd9b404e6",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "efbe954c-1d30-4ee3-adb6-e6fe5e20db50",
+                            ConcurrencyStamp = "7f40e46c-db38-4ece-84b1-890dec924a5b",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -483,76 +184,303 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Comment", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Comment", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
+                    b.Property<long>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Video", "Video")
-                        .WithMany("Comments")
-                        .HasForeignKey("VideoId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CommentId"), 1L, 1);
 
-                    b.Navigation("User");
+                    b.Property<string>("CommentText")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
 
-                    b.Navigation("Video");
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<long?>("VideoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CommentId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Course", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Course", "Course")
-                        .WithMany("CourseOfferings")
-                        .HasForeignKey("CourseId");
+                    b.Property<long>("CourseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.Navigation("Course");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CourseId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("MarqueeImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
+
+                    b.HasKey("CourseId");
+
+                    b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Enrollment", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.CourseOffering", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("CourseOfferingId");
+                    b.Property<long>("CourseOfferingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", "User")
-                        .WithMany("Enrollments")
-                        .HasForeignKey("UserId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CourseOfferingId"), 1L, 1);
 
-                    b.Navigation("CourseOffering");
+                    b.Property<long?>("CourseId")
+                        .HasColumnType("bigint");
 
-                    b.Navigation("User");
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("OpenDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseOfferingId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseOffering");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Resource", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Enrollment", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Topic", "Topic")
-                        .WithMany("Resources")
-                        .HasForeignKey("TopicId");
+                    b.Property<long>("EnrollmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.Navigation("Topic");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EnrollmentId"), 1L, 1);
+
+                    b.Property<long?>("CourseOfferingId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("EnrollmentId");
+
+                    b.HasIndex("CourseOfferingId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Enrollment");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Resource", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
-                        .WithMany("Topics")
-                        .HasForeignKey("CourseOfferingId");
+                    b.Property<long>("ResourceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.Navigation("CourseOffering");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("ResourceId"), 1L, 1);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long?>("TopicId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ResourceId");
+
+                    b.HasIndex("TopicId");
+
+                    b.ToTable("Resource");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.TopicVideo", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Topic", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Topic", "Topic")
-                        .WithMany("TopicVideos")
-                        .HasForeignKey("TopicId");
+                    b.Property<long>("TopicId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
 
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Video", "Video")
-                        .WithMany("TopicVideo")
-                        .HasForeignKey("VideoId");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicId"), 1L, 1);
 
-                    b.Navigation("Topic");
+                    b.Property<long?>("CourseOfferingId")
+                        .HasColumnType("bigint");
 
-                    b.Navigation("Video");
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TopicId");
+
+                    b.HasIndex("CourseOfferingId");
+
+                    b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
+                {
+                    b.Property<long>("TopicVideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicVideoId"), 1L, 1);
+
+                    b.Property<long?>("TopicId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("VideoId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("TopicVideoId");
+
+                    b.HasIndex("TopicId");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("TopicVideo");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thumbnail")
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Video", b =>
+                {
+                    b.Property<long>("VideoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("VideoId"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("Duration")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Thumbnail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("URL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VideoId");
+
+                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -566,7 +494,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", null)
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -575,7 +503,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", null)
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -590,7 +518,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", null)
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -599,38 +527,110 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", null)
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Course", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Comment", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
+
+                    b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
+                        .WithMany("Comments")
+                        .HasForeignKey("VideoId");
+
+                    b.Navigation("User");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.CourseOffering", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.Course", "Course")
+                        .WithMany("CourseOfferings")
+                        .HasForeignKey("CourseId");
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Enrollment", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("CourseOfferingId");
+
+                    b.HasOne("OnlineVideoCourseWebsite.Models.User", "User")
+                        .WithMany("Enrollments")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("CourseOffering");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Resource", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
+                        .WithMany("Resources")
+                        .HasForeignKey("TopicId");
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Topic", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
+                        .WithMany("Topics")
+                        .HasForeignKey("CourseOfferingId");
+
+                    b.Navigation("CourseOffering");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
+                {
+                    b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
+                        .WithMany("TopicVideos")
+                        .HasForeignKey("TopicId");
+
+                    b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
+                        .WithMany("TopicVideo")
+                        .HasForeignKey("VideoId");
+
+                    b.Navigation("Topic");
+
+                    b.Navigation("Video");
+                });
+
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Course", b =>
                 {
                     b.Navigation("CourseOfferings");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.CourseOffering", b =>
                 {
                     b.Navigation("Enrollments");
 
                     b.Navigation("Topics");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Topic", b =>
                 {
                     b.Navigation("Resources");
 
                     b.Navigation("TopicVideos");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.User", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.User", b =>
                 {
                     b.Navigation("Enrollments");
                 });
 
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Video", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.Video", b =>
                 {
                     b.Navigation("Comments");
 

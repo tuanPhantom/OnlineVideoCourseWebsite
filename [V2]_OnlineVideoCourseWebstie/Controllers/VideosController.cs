@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
-using _V2__OnlineVideoCourseWebsite.Models.ViewModels;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 
-namespace _V2__OnlineVideoCourseWebsite.Controllers
+namespace OnlineVideoCourseWebsite.Controllers
 {
     [Authorize(Roles = "Admin,Instructor")]
     public class VideosController : Controller
@@ -49,9 +49,12 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
               .Include("CourseOfferings.Topics.TopicVideos.Video")
               .FirstOrDefaultAsync();
 
+            var resources = await _context.Resource.Include(m => m.Topic).Include("Topic.CourseOffering").ToListAsync();
+
             var videoViewModel = new VideoViewModel()
             {
                 Course = course,
+                Resources = resources,
                 Video = video
             };
 

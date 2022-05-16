@@ -1,4 +1,4 @@
-﻿@model _V2__OnlineVideoCourseWebsite.Models.Comment
+﻿@model OnlineVideoCourseWebsite.Models.Comment
 
 @{
     ViewData["Title"] = "Edit";
@@ -22,11 +22,6 @@
                 <label asp-for="UserId" class="control-label"></label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastModifiedDate" class="control-label"></label>

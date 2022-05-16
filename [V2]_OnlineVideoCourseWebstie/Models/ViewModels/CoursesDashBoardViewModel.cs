@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace _V2__OnlineVideoCourseWebsite.Models.ViewModels
+namespace OnlineVideoCourseWebsite.Models.ViewModels
 {
     public class CoursesDashBoardViewModel
     {

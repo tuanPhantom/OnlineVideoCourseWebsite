@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace _V2__OnlineVideoCourseWebsite.Controllers
+namespace OnlineVideoCourseWebsite.Controllers
 {
     [Authorize(Roles = "Admin,Instructor,Student")]
     public class CommentsController : Controller
@@ -60,7 +60,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,CommentText,UserId,CreatedDate,LastModifiedDate,VideoId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("CommentId,CommentText,UserId,LastModifiedDate,VideoId")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("CommentId,CommentText,UserId,CreatedDate,LastModifiedDate,VideoId")] Comment comment)
+        public async Task<IActionResult> Edit(long id, [Bind("CommentId,CommentText,UserId,LastModifiedDate,VideoId")] Comment comment)
         {
             if (id != comment.CommentId)
             {

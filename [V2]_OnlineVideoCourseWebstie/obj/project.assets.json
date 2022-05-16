@@ -10071,9 +10071,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\[V2]_OnlineVideoCourseWebsite.csproj",
-      "projectName": "[V2]_OnlineVideoCourseWebsite",
-      "projectPath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\[V2]_OnlineVideoCourseWebsite.csproj",
+      "projectUniqueName": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
+      "projectName": "OnlineVideoCourseWebsite",
+      "projectPath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\OnlineVideoCourseWebsite.csproj",
       "packagesPath": "C:\\Users\\Tuan\\.nuget\\packages\\",
       "outputPath": "D:\\workspace\\vs workspace\\ss2\\[V2]_OnlineVideoCourseWebsite\\[V2]_OnlineVideoCourseWebstie\\obj\\",
       "projectStyle": "PackageReference",

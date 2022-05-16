@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
-using _V2__OnlineVideoCourseWebsite.Models.ViewModels;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using OnlineVideoCourseWebsite.Common;
 
-namespace _V2__OnlineVideoCourseWebsite.Controllers
+namespace OnlineVideoCourseWebsite.Controllers
 {
     public class CoursesController : Controller
     {
@@ -140,12 +141,17 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             dynamic courseOffering;
             if (CourseOfferingId == null)
             {
-                courseOffering = (await _context.CourseOffering.ToArrayAsync())[0];
+                List<CourseOffering> courseOfferings = await _context.CourseOffering.ToListAsync();
+                CourseOfferingComparerDesc comparer = new CourseOfferingComparerDesc();
+                courseOfferings.Sort(comparer);
+                courseOffering = courseOfferings[0];
             }
             else
             {
                 courseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == CourseOfferingId).FirstOrDefaultAsync();
             }
+
+            var resources = await _context.Resource.Include(m => m.Topic).Include("Topic.CourseOffering").ToListAsync();
 
             // inject to viewModels
             var courseViewModel = new CourseViewModel()
@@ -153,6 +159,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 Course = course,
                 CourseOffering = courseOffering
             };
+
             return View(courseViewModel);
         }
 

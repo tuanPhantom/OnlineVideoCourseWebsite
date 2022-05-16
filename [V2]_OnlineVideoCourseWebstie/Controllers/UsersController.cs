@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace _V2__OnlineVideoCourseWebsite.Controllers
+namespace OnlineVideoCourseWebsite.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller

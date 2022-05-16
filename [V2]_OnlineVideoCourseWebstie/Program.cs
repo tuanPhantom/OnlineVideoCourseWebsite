@@ -1,5 +1,5 @@
-using _V2__OnlineVideoCourseWebsite.Data;
-using _V2__OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
