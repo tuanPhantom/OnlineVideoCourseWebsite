@@ -10,7 +10,7 @@ namespace OnlineVideoCourseWebsite.Models
         public long ResourceId { get; set; }
         public string Title { get; set; }
         public string URL { get; set; }
-        public long? TopicId { get; set; }
+        public long TopicId { get; set; }
         public Topic? Topic { get; set; }
     }
 }

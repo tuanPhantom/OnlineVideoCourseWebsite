@@ -3,14 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using OnlineVideoCourseWebsite.Common;
 using OnlineVideoCourseWebsite.Data;
 using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
+    [Authorize(Roles = "Admin,Instructor,Student")]
     public class EnrollmentsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -50,8 +55,9 @@ namespace OnlineVideoCourseWebsite.Controllers
         // GET: Enrollments/Create
         public IActionResult Create()
         {
-            ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "UserName");
+            long id = JsonConvert.DeserializeObject<long>(TempData["CourseId"].ToString());
+            List<CourseOffering> CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == id).ToList();
+            ViewBag.CourseOfferingId = new SelectList(CourseOfferings, "CourseOfferingId", "Year");
             return View();
         }
 
@@ -60,13 +66,16 @@ namespace OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnrollmentId,Grade,UserId,CourseOfferingId")] Enrollment enrollment)
+        public async Task<IActionResult> Create([Bind("EnrollmentId,CourseOfferingId")] Enrollment enrollment)
         {
+            enrollment.UserId = TempData["userId"].ToString();
+            enrollment.User = await _context.User.Where(m => m.Id == enrollment.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid)
             {
                 _context.Add(enrollment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                enrollment.CourseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == enrollment.CourseOfferingId).FirstOrDefaultAsync();
+                return Redirect(TempData["url"].ToString());
             }
             ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);
@@ -121,7 +130,7 @@ namespace OnlineVideoCourseWebsite.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect(TempData["url"].ToString());
             }
             ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
             ViewBag.UserId = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);

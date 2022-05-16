@@ -11,7 +11,7 @@ namespace OnlineVideoCourseWebsite.Models
         public int? Grade { get; set; }
         public String? UserId { get; set; }
         public User? User { get; set; }
-        public long? CourseOfferingId { get; set; }
+        public long CourseOfferingId { get; set; }
         public CourseOffering? CourseOffering { get; set; }
     }
 }

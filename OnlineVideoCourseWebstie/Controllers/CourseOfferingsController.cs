@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
+    [Authorize(Roles = "Admin,Instructor,Student")]
     public class CourseOfferingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -59,6 +61,8 @@ namespace OnlineVideoCourseWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CourseOfferingId,Year,OpenDate,CourseId")] CourseOffering courseOffering)
         {
+            var course = await _context.Course.Where(m => m.CourseId == courseOffering.CourseId).FirstOrDefaultAsync();
+            courseOffering.Course = course;
             if (ModelState.IsValid)
             {
                 _context.Add(courseOffering);

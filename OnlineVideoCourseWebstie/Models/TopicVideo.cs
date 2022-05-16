@@ -8,9 +8,9 @@ namespace OnlineVideoCourseWebsite.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long TopicVideoId { get; set; }
-        public long? TopicId { get; set; }
+        public long TopicId { get; set; }
         public Topic? Topic { get; set; }
-        public long? VideoId { get; set; }
+        public long VideoId { get; set; }
         public Video? Video { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineVideoCourseWebsite.Data;
 
@@ -11,9 +12,10 @@ using OnlineVideoCourseWebsite.Data;
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516204249_goldv6")]
+    partial class goldv6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "a3699897-d747-4320-acbf-0ec5fe26cc07",
+                            ConcurrencyStamp = "cc7ebb4a-9c57-4de3-8aaa-11cedfbeb9a1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "59f1b15a-d1ff-418c-8add-4f590c0db7d8",
+                            ConcurrencyStamp = "5716c408-6ac2-48bf-85fb-ae7f4182500b",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "303b7975-cb1f-498a-9277-5b9393c49cbe",
+                            ConcurrencyStamp = "ff0504be-7cde-4be2-84e8-7b532f55e0de",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -294,7 +296,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnrollmentId");
@@ -571,9 +572,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CourseOffering");
 

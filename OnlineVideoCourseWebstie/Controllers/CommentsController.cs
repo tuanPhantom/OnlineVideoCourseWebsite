@@ -1,14 +1,13 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OnlineVideoCourseWebsite.Data;
 using OnlineVideoCourseWebsite.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
@@ -32,7 +31,7 @@ namespace OnlineVideoCourseWebsite.Controllers
         // GET: Comments/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Comment == null)
             {
                 return NotFound();
             }
@@ -75,7 +74,7 @@ namespace OnlineVideoCourseWebsite.Controllers
         // GET: Comments/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Comment == null)
             {
                 return NotFound();
             }
@@ -94,7 +93,7 @@ namespace OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("CommentId,CommentText,UserId,LastModifiedDate,VideoId")] Comment comment)
+        public async Task<IActionResult> Edit(long id, [Bind("CommentId,CommentText,UserId,CreatedDate,LastModifiedDate,VideoId")] Comment comment)
         {
             if (id != comment.CommentId)
             {
@@ -128,7 +127,7 @@ namespace OnlineVideoCourseWebsite.Controllers
         // GET: Comments/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Comment == null)
             {
                 return NotFound();
             }
@@ -149,15 +148,23 @@ namespace OnlineVideoCourseWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
+            if (_context.Comment == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Comment'  is null.");
+            }
             var comment = await _context.Comment.FindAsync(id);
-            _context.Comment.Remove(comment);
+            if (comment != null)
+            {
+                _context.Comment.Remove(comment);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CommentExists(long id)
         {
-            return _context.Comment.Any(e => e.CommentId == id);
+          return (_context.Comment?.Any(e => e.CommentId == id)).GetValueOrDefault();
         }
     }
 }

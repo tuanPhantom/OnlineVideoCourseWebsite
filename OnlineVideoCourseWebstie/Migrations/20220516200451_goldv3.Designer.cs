@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineVideoCourseWebsite.Data;
 
@@ -11,9 +12,10 @@ using OnlineVideoCourseWebsite.Data;
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516200451_goldv3")]
+    partial class goldv3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "a3699897-d747-4320-acbf-0ec5fe26cc07",
+                            ConcurrencyStamp = "0847e4ef-a219-48a6-a3c3-fd10378ca980",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "59f1b15a-d1ff-418c-8add-4f590c0db7d8",
+                            ConcurrencyStamp = "8f52d874-36c4-4cd6-b666-20bc33670dc8",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "303b7975-cb1f-498a-9277-5b9393c49cbe",
+                            ConcurrencyStamp = "f10ae555-1f8f-4ae3-95e5-7ec1e335335f",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -195,19 +197,19 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .HasMaxLength(1024)
                         .HasColumnType("nvarchar(1024)");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("LastModifiedDate")
+                    b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("UserId")
+                    b.Property<long?>("UserId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UserId1")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<long>("VideoId")
+                    b.Property<long?>("VideoId")
                         .HasColumnType("bigint");
 
                     b.HasKey("CommentId");
@@ -260,13 +262,13 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("CourseOfferingId"), 1L, 1);
 
-                    b.Property<long>("CourseId")
+                    b.Property<long?>("CourseId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("CreatedDate")
+                    b.Property<DateTime?>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("OpenDate")
+                    b.Property<DateTime?>("OpenDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Year")
@@ -287,14 +289,13 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EnrollmentId"), 1L, 1);
 
-                    b.Property<long>("CourseOfferingId")
+                    b.Property<long?>("CourseOfferingId")
                         .HasColumnType("bigint");
 
                     b.Property<int?>("Grade")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnrollmentId");
@@ -318,7 +319,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("TopicId")
+                    b.Property<long?>("TopicId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("URL")
@@ -340,7 +341,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicId"), 1L, 1);
 
-                    b.Property<long>("CourseOfferingId")
+                    b.Property<long?>("CourseOfferingId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -362,10 +363,10 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicVideoId"), 1L, 1);
 
-                    b.Property<long>("TopicId")
+                    b.Property<long?>("TopicId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("VideoId")
+                    b.Property<long?>("VideoId")
                         .HasColumnType("bigint");
 
                     b.HasKey("TopicVideoId");
@@ -541,9 +542,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
                         .WithMany("Comments")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VideoId");
 
                     b.Navigation("User");
 
@@ -554,9 +553,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.Course", "Course")
                         .WithMany("CourseOfferings")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseId");
 
                     b.Navigation("Course");
                 });
@@ -565,15 +562,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
                         .WithMany("Enrollments")
-                        .HasForeignKey("CourseOfferingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseOfferingId");
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CourseOffering");
 
@@ -584,9 +577,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
                         .WithMany("Resources")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TopicId");
 
                     b.Navigation("Topic");
                 });
@@ -595,9 +586,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
                         .WithMany("Topics")
-                        .HasForeignKey("CourseOfferingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CourseOfferingId");
 
                     b.Navigation("CourseOffering");
                 });
@@ -606,15 +595,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
                         .WithMany("TopicVideos")
-                        .HasForeignKey("TopicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TopicId");
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
                         .WithMany("TopicVideo")
-                        .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VideoId");
 
                     b.Navigation("Topic");
 

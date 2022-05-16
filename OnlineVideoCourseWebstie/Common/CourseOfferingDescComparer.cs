@@ -5,7 +5,7 @@ namespace OnlineVideoCourseWebsite.Common
     /**
     * @Overview a class to compare CourseOfferings in descending order by their OpenDate 
     */
-    public class CourseOfferingComparerDesc : Comparer<CourseOffering>
+    public class CourseOfferingDescComparer : Comparer<CourseOffering>
     {
         public override int Compare(CourseOffering? x, CourseOffering? y)
         {
@@ -19,8 +19,8 @@ namespace OnlineVideoCourseWebsite.Common
                 return -1;
             }
 
-            int nowX = x.OpenDate.Value.CompareTo(DateTime.Now); // negative result means the course opened
-            int nowY = y.OpenDate.Value.CompareTo(DateTime.Now);
+            int nowX = x.OpenDate.CompareTo(DateTime.Now); // negative result means the course opened
+            int nowY = y.OpenDate.CompareTo(DateTime.Now);
 
             if (nowX == nowY)
             {

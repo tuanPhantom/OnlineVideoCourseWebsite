@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineVideoCourseWebsite.Data;
 
@@ -11,9 +12,10 @@ using OnlineVideoCourseWebsite.Data;
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220516203113_goldv4")]
+    partial class goldv4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "a3699897-d747-4320-acbf-0ec5fe26cc07",
+                            ConcurrencyStamp = "58bd4d95-cc72-4fe5-b56f-61843e9098c1",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "59f1b15a-d1ff-418c-8add-4f590c0db7d8",
+                            ConcurrencyStamp = "60ae996e-fea9-4b49-9384-0c9718fb3c55",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "303b7975-cb1f-498a-9277-5b9393c49cbe",
+                            ConcurrencyStamp = "151b3967-6422-4dce-952f-afbe28ade199",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });

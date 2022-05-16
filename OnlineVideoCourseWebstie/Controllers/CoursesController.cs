@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using OnlineVideoCourseWebsite.Common;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
@@ -65,14 +67,27 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(coursesDashBoardViewModel);
         }
 
-
-
-
         // GET: Courses/Details/5
         [HttpGet("details")]
         [Authorize(Roles = "Admin,Instructor,Student")]
         public async Task<IActionResult> Details(long? id, long? CourseOfferingId)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var course = await _context.Course.Where(m => m.CourseId == id)
+                .Include(m => m.CourseOfferings).Include("CourseOfferings.Topics.TopicVideos")
+                .Include("CourseOfferings.Topics.TopicVideos.Video")
+                .FirstOrDefaultAsync();
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            // check enrollment
             string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var currentUser = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
 
@@ -87,27 +102,14 @@ namespace OnlineVideoCourseWebsite.Controllers
 
             if (enrollments == null || enrollments.Where(m => (m.CourseOfferingId != CourseOfferingId) && CourseOfferingId != null).ToList().Count == enrollments.Count)
             {
+                TempData["courseId"] = JsonConvert.SerializeObject(id);
+                TempData["userId"] = userId;
+                TempData["courseName"] = course.Title;
+                TempData["url"] = Request.GetDisplayUrl();
                 return Redirect("/Enrollments/Create");
             }
 
-
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var course = await _context.Course.Where(m => m.CourseId == id)
-                .Include(m => m.CourseOfferings).Include("CourseOfferings.Topics.TopicVideos")
-                .Include("CourseOfferings.Topics.TopicVideos.Video")
-                .FirstOrDefaultAsync();
-
             //var course = await _context.Course.FindAsync(id);
-
-            if (course == null)
-            {
-                return NotFound();
-            }
-
             //foreach (var topic in _context.Topic)
             //{
             //    if (topic.CourseId == course.CourseId)
@@ -142,7 +144,7 @@ namespace OnlineVideoCourseWebsite.Controllers
             if (CourseOfferingId == null)
             {
                 List<CourseOffering> courseOfferings = await _context.CourseOffering.ToListAsync();
-                CourseOfferingComparerDesc comparer = new CourseOfferingComparerDesc();
+                CourseOfferingDescComparer comparer = new CourseOfferingDescComparer();
                 courseOfferings.Sort(comparer);
                 courseOffering = courseOfferings[0];
             }
