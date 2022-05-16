@@ -28,17 +28,51 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             _userManager = userManager;
         }
 
+        private async Task<User> FindUser()
+        {
+            User user = null;
+            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
+            if (claim != null)
+            {
+                string userId = claim.Value;
+                user = await _userManager.FindByIdAsync(userId);
+            }
+            return user;
+        }
+
+        private async Task<string> FindUserRole(User user)
+        {
+            if (user == null) return null;
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles != null && roles.Count > 0 ? roles[0] : null;
+            return role;
+        }
+
         // GET: Courses
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Course.ToListAsync());
+            List<Course> courses = await _context.Course.ToListAsync();
+
+            User user = await FindUser();
+            string role = await FindUserRole(user);
+
+            CoursesDashBoardViewModel coursesDashBoardViewModel = new CoursesDashBoardViewModel()
+            {
+                Courses = courses,
+                Role = role
+            };
+            return View(coursesDashBoardViewModel);
         }
 
+
+
+
         // GET: Courses/Details/5
+        [HttpGet("details")]
         [Authorize(Roles = "Admin,Instructor,Student")]
-        public async Task<IActionResult> Details(long? id)
+        public async Task<IActionResult> Details(long? id, long? CourseOfferingId)
         {
-            string userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var currentUser = await _userManager.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
 
             if (userId == null || currentUser == null)
@@ -46,15 +80,15 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 return NotFound();
             }
 
-            var enrollment = await _context.Enrollment.Where(m => m.User == currentUser)
+            var enrollments = await _context.Enrollment.Where(m => m.User == currentUser)
                 .Where(m => m.CourseOffering.CourseId == id)
-                .FirstOrDefaultAsync();
+                .ToListAsync();
 
-            if (enrollment == null)
+            if (enrollments == null || enrollments.Where(m => (m.CourseOfferingId != CourseOfferingId) && CourseOfferingId != null).ToList().Count == enrollments.Count)
             {
-                EnrollmentsController enrollmentsController = new EnrollmentsController(_context);
                 return Redirect("/Enrollments/Create");
             }
+
 
             if (id == null)
             {
@@ -62,8 +96,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             }
 
             var course = await _context.Course.Where(m => m.CourseId == id)
-                .Include(m => m.Topics).Include("Topics.TopicVideos")
-                .Include("Topics.TopicVideos.Video")
+                .Include(m => m.CourseOfferings).Include("CourseOfferings.Topics.TopicVideos")
+                .Include("CourseOfferings.Topics.TopicVideos.Video")
                 .FirstOrDefaultAsync();
 
             //var course = await _context.Course.FindAsync(id);
@@ -103,11 +137,21 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             //    }
             //}
 
+            dynamic courseOffering;
+            if (CourseOfferingId == null)
+            {
+                courseOffering = (await _context.CourseOffering.ToArrayAsync())[0];
+            }
+            else
+            {
+                courseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == CourseOfferingId).FirstOrDefaultAsync();
+            }
+
             // inject to viewModels
             var courseViewModel = new CourseViewModel()
             {
                 Course = course,
-                Topics = course.Topics
+                CourseOffering = courseOffering
             };
             return View(courseViewModel);
         }

@@ -3,6 +3,6 @@
     public class CourseViewModel
     {
         public Course Course { get; set; }
-        public List<Topic> Topics { get; set; } = new List<Topic>();
+        public CourseOffering CourseOffering { get; set; }
     }
 }

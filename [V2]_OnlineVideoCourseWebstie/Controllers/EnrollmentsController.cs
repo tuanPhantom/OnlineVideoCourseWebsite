@@ -50,8 +50,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: Enrollments/Create
         public IActionResult Create()
         {
-            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
+            ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "UserName");
             return View();
         }
 
@@ -68,8 +68,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
+            ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -86,8 +86,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
+            ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
+            ViewBag.UserId = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -123,8 +123,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", enrollment.CourseOfferingId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", enrollment.UserId);
+            ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
+            ViewBag.UserId = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);
             return View(enrollment);
         }
 

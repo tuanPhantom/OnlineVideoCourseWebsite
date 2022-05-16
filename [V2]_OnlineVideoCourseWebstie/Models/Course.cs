@@ -16,7 +16,6 @@ namespace _V2__OnlineVideoCourseWebsite.Models
         public string ImageUrl { get; set; }
         [MaxLength(255)]
         public string MarqueeImageUrl { get; set; }
-        public List<Topic> Topics { get; set; } = new List<Topic>();
         public List<CourseOffering> CourseOfferings { get; set; } = new List<CourseOffering>();
     }
 }

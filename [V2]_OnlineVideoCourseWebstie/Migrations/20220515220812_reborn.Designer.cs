@@ -12,14 +12,14 @@ using _V2__OnlineVideoCourseWebsite.Data;
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220426032247_v8")]
-    partial class v8
+    [Migration("20220515220812_reborn")]
+    partial class reborn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -135,17 +135,14 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.Property<int?>("Grade")
                         .HasColumnType("int");
 
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnrollmentId");
 
                     b.HasIndex("CourseOfferingId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Enrollment");
                 });
@@ -184,7 +181,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicId"), 1L, 1);
 
-                    b.Property<long?>("CourseId")
+                    b.Property<long?>("CourseOfferingId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -193,7 +190,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasKey("TopicId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseOfferingId");
 
                     b.ToTable("Topic");
                 });
@@ -317,16 +314,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("TopicId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("URL")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("VideoId");
-
-                    b.HasIndex("TopicId");
 
                     b.ToTable("Video");
                 });
@@ -361,21 +353,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "02e63747-ffcd-4a69-84d6-360a846b1d7e",
+                            ConcurrencyStamp = "3b9d10ca-610c-4003-8bd7-81b3d4b4713d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "d9f7badb-f0df-4de8-9acf-331c3c679d05",
+                            ConcurrencyStamp = "04a34dfe-3c82-4db8-969d-2d520830c9ba",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "2fff25a9-19a8-46ad-8351-1d8df730219a",
+                            ConcurrencyStamp = "efbe954c-1d30-4ee3-adb6-e6fe5e20db50",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -518,12 +510,12 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Enrollment", b =>
                 {
                     b.HasOne("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
-                        .WithMany()
+                        .WithMany("Enrollments")
                         .HasForeignKey("CourseOfferingId");
 
                     b.HasOne("_V2__OnlineVideoCourseWebsite.Models.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CourseOffering");
 
@@ -541,11 +533,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Course", "Course")
+                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
                         .WithMany("Topics")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseOfferingId");
 
-                    b.Navigation("Course");
+                    b.Navigation("CourseOffering");
                 });
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.TopicVideo", b =>
@@ -561,13 +553,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.Navigation("Topic");
 
                     b.Navigation("Video");
-                });
-
-            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Video", b =>
-                {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Topic", null)
-                        .WithMany("Videos")
-                        .HasForeignKey("TopicId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -624,6 +609,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Course", b =>
                 {
                     b.Navigation("CourseOfferings");
+                });
+
+            modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", b =>
+                {
+                    b.Navigation("Enrollments");
 
                     b.Navigation("Topics");
                 });
@@ -633,8 +623,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.Navigation("Resources");
 
                     b.Navigation("TopicVideos");
-
-                    b.Navigation("Videos");
                 });
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.User", b =>

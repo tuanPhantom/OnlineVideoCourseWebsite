@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _V2__OnlineVideoCourseWebsite.Data;
 using _V2__OnlineVideoCourseWebsite.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
-    [Authorize(Roles = "Admin,Instructor")]
     public class TopicsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -25,20 +22,20 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: Topics
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Topic.Include(t => t.Course);
+            var applicationDbContext = _context.Topic.Include(t => t.CourseOffering);
             return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Topics/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Topic == null)
             {
                 return NotFound();
             }
 
             var topic = await _context.Topic
-                .Include(t => t.Course)
+                .Include(t => t.CourseOffering)
                 .FirstOrDefaultAsync(m => m.TopicId == id);
             if (topic == null)
             {
@@ -51,7 +48,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: Topics/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "Title");
+            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId");
             return View();
         }
 
@@ -60,7 +57,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TopicId,Title,CourseId")] Topic topic)
+        public async Task<IActionResult> Create([Bind("TopicId,Title,CourseOfferingId")] Topic topic)
         {
             if (ModelState.IsValid)
             {
@@ -68,14 +65,14 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "Title", topic.CourseId);
+            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", topic.CourseOfferingId);
             return View(topic);
         }
 
         // GET: Topics/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Topic == null)
             {
                 return NotFound();
             }
@@ -85,7 +82,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "Title", topic.CourseId);
+            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", topic.CourseOfferingId);
             return View(topic);
         }
 
@@ -94,7 +91,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("TopicId,Title,CourseId")] Topic topic)
+        public async Task<IActionResult> Edit(long id, [Bind("TopicId,Title,CourseOfferingId")] Topic topic)
         {
             if (id != topic.TopicId)
             {
@@ -121,20 +118,20 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_context.Course, "CourseId", "Title", topic.CourseId);
+            ViewData["CourseOfferingId"] = new SelectList(_context.CourseOffering, "CourseOfferingId", "CourseOfferingId", topic.CourseOfferingId);
             return View(topic);
         }
 
         // GET: Topics/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
+            if (id == null || _context.Topic == null)
             {
                 return NotFound();
             }
 
             var topic = await _context.Topic
-                .Include(t => t.Course)
+                .Include(t => t.CourseOffering)
                 .FirstOrDefaultAsync(m => m.TopicId == id);
             if (topic == null)
             {
@@ -149,15 +146,23 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
+            if (_context.Topic == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Topic'  is null.");
+            }
             var topic = await _context.Topic.FindAsync(id);
-            _context.Topic.Remove(topic);
+            if (topic != null)
+            {
+                _context.Topic.Remove(topic);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TopicExists(long id)
         {
-            return _context.Topic.Any(e => e.TopicId == id);
+          return (_context.Topic?.Any(e => e.TopicId == id)).GetValueOrDefault();
         }
     }
 }

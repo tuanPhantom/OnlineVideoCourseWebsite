@@ -1,5 +1,4 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,11 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _V2__OnlineVideoCourseWebsite.Data;
 using _V2__OnlineVideoCourseWebsite.Models;
-using Microsoft.AspNetCore.Authorization;
 
 namespace _V2__OnlineVideoCourseWebsite.Controllers
 {
-    [Authorize(Roles = "Admin,Instructor")]
     public class CourseOfferingsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -32,7 +29,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: CourseOfferings/Details/5
         public async Task<IActionResult> Details(long? id)
         {
-            if (id == null)
+            if (id == null || _context.CourseOffering == null)
             {
                 return NotFound();
             }
@@ -75,7 +72,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: CourseOfferings/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
+            if (id == null || _context.CourseOffering == null)
             {
                 return NotFound();
             }
@@ -128,7 +125,7 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         // GET: CourseOfferings/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
+            if (id == null || _context.CourseOffering == null)
             {
                 return NotFound();
             }
@@ -149,15 +146,23 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
+            if (_context.CourseOffering == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.CourseOffering'  is null.");
+            }
             var courseOffering = await _context.CourseOffering.FindAsync(id);
-            _context.CourseOffering.Remove(courseOffering);
+            if (courseOffering != null)
+            {
+                _context.CourseOffering.Remove(courseOffering);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CourseOfferingExists(long id)
         {
-            return _context.CourseOffering.Any(e => e.CourseOfferingId == id);
+          return (_context.CourseOffering?.Any(e => e.CourseOfferingId == id)).GetValueOrDefault();
         }
     }
 }

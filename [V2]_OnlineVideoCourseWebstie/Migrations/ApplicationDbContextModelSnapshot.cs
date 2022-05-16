@@ -17,7 +17,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -179,7 +179,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("TopicId"), 1L, 1);
 
-                    b.Property<long?>("CourseId")
+                    b.Property<long?>("CourseOfferingId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -188,7 +188,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasKey("TopicId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseOfferingId");
 
                     b.ToTable("Topic");
                 });
@@ -351,21 +351,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "ed436b6a-cc85-4adb-accf-eab1e91ddd3a",
+                            ConcurrencyStamp = "3b9d10ca-610c-4003-8bd7-81b3d4b4713d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "26d718e1-fe6e-42b5-b7d4-4ea2264211d9",
+                            ConcurrencyStamp = "04a34dfe-3c82-4db8-969d-2d520830c9ba",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "aaa18830-f590-4c44-ab7e-f751e8f189ba",
+                            ConcurrencyStamp = "efbe954c-1d30-4ee3-adb6-e6fe5e20db50",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -531,11 +531,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>
                 {
-                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.Course", "Course")
+                    b.HasOne("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", "CourseOffering")
                         .WithMany("Topics")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseOfferingId");
 
-                    b.Navigation("Course");
+                    b.Navigation("CourseOffering");
                 });
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.TopicVideo", b =>
@@ -607,13 +607,13 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Course", b =>
                 {
                     b.Navigation("CourseOfferings");
-
-                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.CourseOffering", b =>
                 {
                     b.Navigation("Enrollments");
+
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("_V2__OnlineVideoCourseWebsite.Models.Topic", b =>

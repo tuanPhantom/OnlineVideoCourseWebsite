@@ -29,10 +29,25 @@
     </div>
 </div>
 
+
+    <div class="dropdown">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    Your Course Offering: @Model.Course.Title @Model.CourseOffering.Year
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        @foreach(var item in Model.Course.CourseOfferings)
+        {
+            <li><a class="dropdown-item" href="/details?id=@Model.Course.CourseId&&CourseOfferingId=@item.CourseOfferingId">@item.Year</a></li>
+        }
+    </ul>
+    </div>
+
+
 <div class="row">
     <div class="col-md-9">
         @*Add modules here*@
-        @foreach (var topic in Model.Topics)
+        @foreach (var topic in Model.CourseOffering.Topics)
         {
             <div class="card small-top-margin no-border-radius">
                 <div class="card-body">

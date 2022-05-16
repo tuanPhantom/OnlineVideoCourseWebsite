@@ -45,8 +45,8 @@ namespace _V2__OnlineVideoCourseWebsite.Controllers
             }
 
             var course = await _context.Course
-              .Include(m => m.Topics).Include("Topics.TopicVideos")
-              .Include("Topics.TopicVideos.Video")
+              .Include(m => m.CourseOfferings).Include("CourseOfferings.Topics.TopicVideos")
+              .Include("CourseOfferings.Topics.TopicVideos.Video")
               .FirstOrDefaultAsync();
 
             var videoViewModel = new VideoViewModel()

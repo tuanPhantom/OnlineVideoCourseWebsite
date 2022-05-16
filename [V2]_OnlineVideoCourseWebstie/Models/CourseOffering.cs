@@ -13,6 +13,9 @@ namespace _V2__OnlineVideoCourseWebsite.Models
         public DateTime? CreatedDate { get; set; } = DateTime.Now;
         public DateTime? OpenDate { get; set; }
         public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
+
+        public List<Topic> Topics { get; set; } = new List<Topic>();
+
         public long? CourseId { get; set; }
         public Course? Course { get; set; }
     }

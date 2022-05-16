@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
-    public partial class v1 : Migration
+    public partial class reborn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,8 +28,8 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
-                    Thumbnail = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
+                    Thumbnail = table.Column<string>(type: "nvarchar(1024)", maxLength: 1024, nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -64,6 +64,23 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Course", x => x.CourseId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Video",
+                columns: table => new
+                {
+                    VideoId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duration = table.Column<long>(type: "bigint", nullable: false),
+                    Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Video", x => x.VideoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -194,101 +211,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
-                columns: table => new
-                {
-                    TopicId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CourseId = table.Column<long>(type: "bigint", nullable: true),
-                    TopicVideoId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Topic", x => x.TopicId);
-                    table.ForeignKey(
-                        name: "FK_Topic_Course_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Course",
-                        principalColumn: "CourseId");
-                    table.ForeignKey(
-                        name: "FK_Topic_Topic_TopicVideoId",
-                        column: x => x.TopicVideoId,
-                        principalTable: "Topic",
-                        principalColumn: "TopicId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Enrollment",
-                columns: table => new
-                {
-                    EnrollmentId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Grade = table.Column<int>(type: "int", nullable: true),
-                    UserId = table.Column<long>(type: "bigint", nullable: true),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CourseOfferingId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Enrollment", x => x.EnrollmentId);
-                    table.ForeignKey(
-                        name: "FK_Enrollment_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Enrollment_CourseOffering_CourseOfferingId",
-                        column: x => x.CourseOfferingId,
-                        principalTable: "CourseOffering",
-                        principalColumn: "CourseOfferingId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Resource",
-                columns: table => new
-                {
-                    ResourceId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TopicId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Resource", x => x.ResourceId);
-                    table.ForeignKey(
-                        name: "FK_Resource_Topic_TopicId",
-                        column: x => x.TopicId,
-                        principalTable: "Topic",
-                        principalColumn: "TopicId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Video",
-                columns: table => new
-                {
-                    VideoId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Duration = table.Column<long>(type: "bigint", nullable: false),
-                    Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TopicVideoId = table.Column<long>(type: "bigint", nullable: true),
-                    TopicId = table.Column<long>(type: "bigint", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Video", x => x.VideoId);
-                    table.ForeignKey(
-                        name: "FK_Video_Topic_TopicId",
-                        column: x => x.TopicId,
-                        principalTable: "Topic",
-                        principalColumn: "TopicId");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Comment",
                 columns: table => new
                 {
@@ -317,21 +239,84 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Enrollment",
+                columns: table => new
+                {
+                    EnrollmentId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Grade = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CourseOfferingId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Enrollment", x => x.EnrollmentId);
+                    table.ForeignKey(
+                        name: "FK_Enrollment_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Enrollment_CourseOffering_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOffering",
+                        principalColumn: "CourseOfferingId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Topic",
+                columns: table => new
+                {
+                    TopicId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CourseOfferingId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Topic", x => x.TopicId);
+                    table.ForeignKey(
+                        name: "FK_Topic_CourseOffering_CourseOfferingId",
+                        column: x => x.CourseOfferingId,
+                        principalTable: "CourseOffering",
+                        principalColumn: "CourseOfferingId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Resource",
+                columns: table => new
+                {
+                    ResourceId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    URL = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TopicId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Resource", x => x.ResourceId);
+                    table.ForeignKey(
+                        name: "FK_Resource_Topic_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topic",
+                        principalColumn: "TopicId");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TopicVideo",
                 columns: table => new
                 {
                     TopicVideoId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TopicId = table.Column<long>(type: "bigint", nullable: true),
-                    TopicId1 = table.Column<long>(type: "bigint", nullable: true),
                     VideoId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TopicVideo", x => x.TopicVideoId);
                     table.ForeignKey(
-                        name: "FK_TopicVideo_Topic_TopicId1",
-                        column: x => x.TopicId1,
+                        name: "FK_TopicVideo_Topic_TopicId",
+                        column: x => x.TopicId,
                         principalTable: "Topic",
                         principalColumn: "TopicId");
                     table.ForeignKey(
@@ -344,17 +329,17 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "a4d56e64-cde5-4e3a-8ca1-5c7fedb61430", "Admin", "ADMIN" });
+                values: new object[] { "1", "3b9d10ca-610c-4003-8bd7-81b3d4b4713d", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2", "c0d2c643-b221-4d23-9144-e66fabc5ee44", "Teacher", "TEACHER" });
+                values: new object[] { "2", "04a34dfe-3c82-4db8-969d-2d520830c9ba", "Teacher", "TEACHER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3", "27a75538-7a9d-4b3b-9b1c-4a377d7d8134", "Student", "STUDENT" });
+                values: new object[] { "3", "efbe954c-1d30-4ee3-adb6-e6fe5e20db50", "Student", "STUDENT" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -416,9 +401,9 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 column: "CourseOfferingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Enrollment_UserId1",
+                name: "IX_Enrollment_UserId",
                 table: "Enrollment",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Resource_TopicId",
@@ -426,29 +411,19 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_CourseId",
+                name: "IX_Topic_CourseOfferingId",
                 table: "Topic",
-                column: "CourseId");
+                column: "CourseOfferingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_TopicVideoId",
-                table: "Topic",
-                column: "TopicVideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TopicVideo_TopicId1",
+                name: "IX_TopicVideo_TopicId",
                 table: "TopicVideo",
-                column: "TopicId1");
+                column: "TopicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TopicVideo_VideoId",
                 table: "TopicVideo",
                 column: "VideoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Video_TopicId",
-                table: "Video",
-                column: "TopicId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -487,13 +462,13 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "CourseOffering");
+                name: "Topic");
 
             migrationBuilder.DropTable(
                 name: "Video");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "CourseOffering");
 
             migrationBuilder.DropTable(
                 name: "Course");
