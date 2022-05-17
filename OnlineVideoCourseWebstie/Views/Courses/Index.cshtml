@@ -5,33 +5,37 @@
 }
 <h1><b>Dashboard</b></h1>
 <p>
-	<a class="btn btn-primary" asp-action="Create">Create New Course</a>
+	@if (User.IsInRole("Admin") || User.IsInRole("Instructor"))
+	{
+		<a class="btn btn-primary" asp-action="Create">Create New Course</a>
+	}
 </p>
 <div class="container">
 	<div class="row">
 		@foreach (var item in Model.Courses)
 		{
-		<div class="col-sm">
-			<div class="card" style="width: 18rem;">
-				<a asp-action="Details" asp-route-id="@item.CourseId" class="card-img-top">
-				<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="210" height="230" class="card-img-top" alt="...">
-				</a>
-				<div class="card-body">
-					<h5 class="card-title">
-						<a asp-action="Details" asp-route-id="@item.CourseId" class="text-decoration-none">
-							@Html.DisplayFor(modelItem => item.Title)
-						</a>
-					</h5>
-					<p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
-					<a asp-action="Details" asp-route-id="@item.CourseId" type="button" class="btn btn-success">View Course</a>
-					@if(Model.Role!=null && Model.Role.Equals("Admin"))
-					{
-						<a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.CourseId">Edit</a>
-						<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
-					}
+			<div class="col-sm-3">
+				<div class="card" style="width: 18rem;">
+					<a asp-action="Details" asp-route-id="@item.CourseId" class="card-img-top">
+						<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="210" height="230" class="card-img-top" alt="...">
+					</a>
+					<div class="card-body">
+						<h5 class="card-title">
+							<a asp-action="Details" asp-route-id="@item.CourseId" class="text-decoration-none">
+								@Html.DisplayFor(modelItem => item.Title)
+							</a>
+						</h5>
+						<p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+						<a asp-action="Details" asp-route-id="@item.CourseId" type="button" class="btn btn-success">View Course</a>
+						@if (Model.Role != null && Model.Role.Equals("Admin"))
+						{
+							<a class="btn btn-secondary" asp-action="Edit" asp-route-id="@item.CourseId">Edit</a>
+							<a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.CourseId">Delete</a>
+						}
+					</div>
 				</div>
+				<br />
 			</div>
-		</div>	
 		}
 	</div>
 </div>

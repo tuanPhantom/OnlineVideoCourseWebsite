@@ -155,6 +155,7 @@ namespace OnlineVideoCourseWebsite.Controllers
             {
                 List<CourseOffering> courseOfferings = await _context.CourseOffering.Where(m => m.CourseId == id)
                 .Where(m => m.Enrollments.Where(m => m.UserId == userId).FirstOrDefault() != null)
+                .Include(m => m.Topics).Include("Topics.Resources")
                 .ToListAsync();
                 CourseOfferingDescComparer comparer = new CourseOfferingDescComparer();
                 courseOfferings.Sort(comparer);
@@ -162,7 +163,9 @@ namespace OnlineVideoCourseWebsite.Controllers
             }
             else
             {
-                courseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == CourseOfferingId).FirstOrDefaultAsync();
+                courseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == CourseOfferingId)
+                    .Include(m => m.Topics).Include("Topics.Resources")
+                    .FirstOrDefaultAsync();
             }
 
             // inject to viewModels

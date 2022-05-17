@@ -49,7 +49,11 @@ namespace OnlineVideoCourseWebsite.Controllers
               .Include("CourseOfferings.Topics.TopicVideos.Video")
               .FirstOrDefaultAsync();
 
-            var resources = await _context.Resource.Include(m => m.Topic).Include("Topic.CourseOffering").ToListAsync();
+            var resources = await _context.Resource
+                .Include(m => m.Topic)
+                .Include("Topic.TopicVideos")
+                .Include("Topic.TopicVideos.Video")
+                .ToListAsync();
 
             var videoViewModel = new VideoViewModel()
             {
