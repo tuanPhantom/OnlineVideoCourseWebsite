@@ -52,11 +52,23 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(enrollment);
         }
 
-        // GET: Enrollments/Create
+
+        // GET: Enrollments/Create/
         public IActionResult Create()
         {
-            long id = JsonConvert.DeserializeObject<long>(TempData["CourseId"].ToString());
-            List<CourseOffering> CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == id).ToList();
+            long CourseId = JsonConvert.DeserializeObject<long>(TempData["courseId"].ToString());
+            //List<CourseOffering> CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == CourseId)
+            //    .Where(m => m.Enrollments.Where(m => m.UserId == BinPattern.Bin["uid"].ToString()).FirstOrDefault() == null)
+            //    .ToList();
+            List<CourseOffering> CourseOfferings;
+            if ((bool)BinPattern.Bin["haveEnrolledAtLeastOnce"] == false)
+            {
+                CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == CourseId).ToList();
+            }
+            else
+            {
+                CourseOfferings = _context.CourseOffering.Where(m => m.CourseOfferingId == JsonConvert.DeserializeObject<long>(TempData["CourseOfferingId"].ToString())).ToList();
+            }
             ViewBag.CourseOfferingId = new SelectList(CourseOfferings, "CourseOfferingId", "Year");
             return View();
         }

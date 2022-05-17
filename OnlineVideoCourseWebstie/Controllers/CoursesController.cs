@@ -106,7 +106,17 @@ namespace OnlineVideoCourseWebsite.Controllers
                 TempData["userId"] = userId;
                 TempData["courseName"] = course.Title;
                 TempData["url"] = Request.GetDisplayUrl();
-                return Redirect("/Enrollments/Create");
+                //BinPattern.Bin["uid"] = userId;
+                if (enrollments.Count == 0)
+                {
+                    BinPattern.Bin["haveEnrolledAtLeastOnce"] = false;
+                }
+                else
+                {
+                    BinPattern.Bin["haveEnrolledAtLeastOnce"] = true;
+                    TempData["CourseOfferingId"] = JsonConvert.SerializeObject(CourseOfferingId);
+                }
+                return Redirect("/Enrollments/Create/");
             }
 
             //var course = await _context.Course.FindAsync(id);
@@ -143,7 +153,9 @@ namespace OnlineVideoCourseWebsite.Controllers
             dynamic courseOffering;
             if (CourseOfferingId == null)
             {
-                List<CourseOffering> courseOfferings = await _context.CourseOffering.ToListAsync();
+                List<CourseOffering> courseOfferings = await _context.CourseOffering.Where(m => m.CourseId == id)
+                .Where(m => m.Enrollments.Where(m => m.UserId == userId).FirstOrDefault() != null)
+                .ToListAsync();
                 CourseOfferingDescComparer comparer = new CourseOfferingDescComparer();
                 courseOfferings.Sort(comparer);
                 courseOffering = courseOfferings[0];
@@ -152,8 +164,6 @@ namespace OnlineVideoCourseWebsite.Controllers
             {
                 courseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == CourseOfferingId).FirstOrDefaultAsync();
             }
-
-            var resources = await _context.Resource.Include(m => m.Topic).Include("Topic.CourseOffering").ToListAsync();
 
             // inject to viewModels
             var courseViewModel = new CourseViewModel()
