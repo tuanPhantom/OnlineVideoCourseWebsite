@@ -13,9 +13,15 @@
 		{
 		<div class="col-sm">
 			<div class="card" style="width: 18rem;">
+				<a asp-action="Details" asp-route-id="@item.CourseId" class="card-img-top">
 				<img src="@Html.DisplayFor(modelItem => item.ImageUrl)" width="210" height="230" class="card-img-top" alt="...">
+				</a>
 				<div class="card-body">
-					<h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+					<h5 class="card-title">
+						<a asp-action="Details" asp-route-id="@item.CourseId" class="text-decoration-none">
+							@Html.DisplayFor(modelItem => item.Title)
+						</a>
+					</h5>
 					<p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
 					<a asp-action="Details" asp-route-id="@item.CourseId" type="button" class="btn btn-success">View Course</a>
 					@if(Model.Role!=null && Model.Role.Equals("Admin"))

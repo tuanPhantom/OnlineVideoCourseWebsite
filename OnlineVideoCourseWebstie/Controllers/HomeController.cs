@@ -19,7 +19,7 @@ namespace OnlineVideoCourseWebstie.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Course.ToListAsync());
+            return Redirect("/");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
