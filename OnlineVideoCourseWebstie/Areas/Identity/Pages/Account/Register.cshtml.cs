@@ -12,13 +12,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
 {
@@ -80,6 +80,11 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
+            [MaxLength(80), Required]
+            [Display(Name = "FullName")]
+            public string FullName { get; set; }
+
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -115,8 +120,6 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                user.Id = Guid.NewGuid().ToString();
-
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -125,14 +128,13 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    //var userId = await _userManager.GetUserIdAsync(user);
-
+                    var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
@@ -162,7 +164,10 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                User user = Activator.CreateInstance<User>();
+                user.Id = Guid.NewGuid().ToString();
+                user.FullName = Input.FullName;
+                return user;
             }
             catch
             {

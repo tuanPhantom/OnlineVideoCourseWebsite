@@ -1,20 +1,21 @@
-﻿@model Video
-    <div class="card-body module-video">
-        <a asp-controller="Videos" asp-action="Details" asp-route-id="@Model.VideoId" class="no-text-decoration">
-            <div class="media">
-                <div class="media-left hidden-xs overflow-hidden">
-                    <img src="@Model.Thumbnail" width="100">
-                </div>
-                <div class="media-body">
-                    <h5 class="no-margin">@Model.Title</h5>
-                    <p class="text-muted no-margin">
-                        <span class="vertical-align text-small">
-                            Suggested study: @Model.Duration hour(s) per week
-                        </span>
-                    </p>
-                    <p class="no-margin">@Model.Description</p>
-                </div>
-            </div>
-        </a>
+﻿@model TopicVideo
+<div class="card-body module-video">
+	@*<a asp-controller="Videos" asp-action="Details" asp-route-id="@Model.VideoId" class="no-text-decoration">*@
+	<a href="/vid?id=@Model.VideoId&topicid=@Model.TopicId" class="no-text-decoration">
+		<div class="media">
+			<div class="media-left hidden-xs overflow-hidden">
+				<img src="@Model.Video.Thumbnail" width="100">
+			</div>
+			<div class="media-body">
+				<h5 class="no-margin">@Model.Video.Title</h5>
+				<p class="text-muted no-margin">
+					<span class="vertical-align text-small">
+						Suggested study: @Model.Video.Duration hour(s) per week
+					</span>
+				</p>
+				<p class="no-margin">@Model.Video.Description</p>
+			</div>
+		</div>
+	</a>
 
-    </div>
+</div>

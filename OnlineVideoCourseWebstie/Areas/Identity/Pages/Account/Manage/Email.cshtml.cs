@@ -7,12 +7,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
 {

@@ -35,15 +35,15 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_TopicVideo_Topic_TopicId",
-                table: "TopicVideo");
+                table: "TopicVideos");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_TopicVideo_Video_VideoId",
-                table: "TopicVideo");
+                table: "TopicVideos");
 
             migrationBuilder.AlterColumn<long>(
                 name: "VideoId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 type: "bigint",
                 nullable: false,
                 defaultValue: 0L,
@@ -53,7 +53,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.AlterColumn<long>(
                 name: "TopicId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 type: "bigint",
                 nullable: false,
                 defaultValue: 0L,
@@ -242,7 +242,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TopicVideo_Topic_TopicId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "TopicId",
                 principalTable: "Topic",
                 principalColumn: "TopicId",
@@ -250,7 +250,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TopicVideo_Video_VideoId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "VideoId",
                 principalTable: "Video",
                 principalColumn: "VideoId",
@@ -285,15 +285,15 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.DropForeignKey(
                 name: "FK_TopicVideo_Topic_TopicId",
-                table: "TopicVideo");
+                table: "TopicVideos");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_TopicVideo_Video_VideoId",
-                table: "TopicVideo");
+                table: "TopicVideos");
 
             migrationBuilder.AlterColumn<long>(
                 name: "VideoId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 type: "bigint",
                 nullable: true,
                 oldClrType: typeof(long),
@@ -301,7 +301,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.AlterColumn<long>(
                 name: "TopicId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 type: "bigint",
                 nullable: true,
                 oldClrType: typeof(long),
@@ -460,14 +460,14 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TopicVideo_Topic_TopicId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "TopicId",
                 principalTable: "Topic",
                 principalColumn: "TopicId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_TopicVideo_Video_VideoId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "VideoId",
                 principalTable: "Video",
                 principalColumn: "VideoId");

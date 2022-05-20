@@ -33,8 +33,8 @@ namespace OnlineVideoCourseWebsite.Data
             new IdentityRole
             {
                 Id = "2",
-                Name = "Teacher",
-                NormalizedName = "TEACHER"
+                Name = "Instructor",
+                NormalizedName = "INSTRUCTOR"
             },
             new IdentityRole
             {

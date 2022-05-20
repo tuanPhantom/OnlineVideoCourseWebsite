@@ -29,8 +29,9 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(await _context.Video.ToListAsync());
         }
 
-        // GET: Videos/Details/5
-        public async Task<IActionResult> Details(long? id)
+        // GET: Videos/Details/vid?id=5&topicid=1
+        [HttpGet("vid")]
+        public async Task<IActionResult> Details(long? id, long topicid)
         {
             if (id == null)
             {
@@ -49,16 +50,14 @@ namespace OnlineVideoCourseWebsite.Controllers
               .Include("CourseOfferings.Topics.TopicVideos.Video")
               .FirstOrDefaultAsync();
 
-            var resources = await _context.Resource
-                .Include(m => m.Topic)
-                .Include("Topic.TopicVideos")
-                .Include("Topic.TopicVideos.Video")
-                .ToListAsync();
+            var topic = await _context.Topic.Where(m => m.TopicId == topicid)
+                .Include(m => m.Resources)
+                .FirstOrDefaultAsync();
 
             var videoViewModel = new VideoViewModel()
             {
                 Course = course,
-                Resources = resources,
+                Resources = topic.Resources,
                 Video = video
             };
 

@@ -303,7 +303,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TopicVideo",
+                name: "TopicVideos",
                 columns: table => new
                 {
                     TopicVideoId = table.Column<long>(type: "bigint", nullable: false)
@@ -417,12 +417,12 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_TopicVideo_TopicId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TopicVideo_VideoId",
-                table: "TopicVideo",
+                table: "TopicVideos",
                 column: "VideoId");
         }
 
@@ -453,7 +453,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 name: "Resource");
 
             migrationBuilder.DropTable(
-                name: "TopicVideo");
+                name: "TopicVideos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

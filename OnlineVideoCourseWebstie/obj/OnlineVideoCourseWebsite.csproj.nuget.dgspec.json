@@ -46,11 +46,11 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[6.0.4, )"
+              "version": "[6.0.5, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[6.0.4, )"
+              "version": "[6.0.5, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
@@ -64,7 +64,7 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.4, )"
+              "version": "[6.0.5, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

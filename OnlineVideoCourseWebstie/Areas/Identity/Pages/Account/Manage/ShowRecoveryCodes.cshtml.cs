@@ -2,11 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
 {

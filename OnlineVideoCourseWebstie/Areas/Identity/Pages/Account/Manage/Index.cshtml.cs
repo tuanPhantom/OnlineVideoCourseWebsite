@@ -6,10 +6,13 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using OnlineVideoCourseWebsite.Common;
+using OnlineVideoCourseWebsite.Data;
+using OnlineVideoCourseWebsite.Models;
 
 namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
 {
@@ -31,6 +34,10 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public string Username { get; set; }
+
+        public string FullName { get; set; }
+
+        public string Thumbnail { get; set; }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -59,6 +66,14 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [MaxLength(80), Required]
+            [Display(Name = "FullName")]
+            public string FullName { get; set; }
+
+            [MaxLength(1024)]
+            [Display(Name = "Thumbnail")]
+            public string Thumbnail { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -67,10 +82,15 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
+            string tmpName = user.FullName;
+            FullName = !tmpName.Equals(Constants.UnregisteredUser) ? tmpName : null;
+            Thumbnail = user.Thumbnail;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                FullName = FullName,
+                Thumbnail = Thumbnail
             };
         }
 
@@ -98,6 +118,21 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            // update FullName
+            if (!Input.FullName.Equals(user.FullName))
+            {
+                user.FullName = Input.FullName;
+                await _userManager.UpdateAsync(user);
+            }
+
+            // update thumbnail
+            var thumbNail = Input.Thumbnail;
+            if (thumbNail != null && !thumbNail.Equals(user.Thumbnail))
+            {
+                user.Thumbnail = thumbNail;
+                await _userManager.UpdateAsync(user);
             }
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);

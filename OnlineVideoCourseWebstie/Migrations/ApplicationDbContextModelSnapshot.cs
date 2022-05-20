@@ -52,21 +52,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "a3699897-d747-4320-acbf-0ec5fe26cc07",
+                            ConcurrencyStamp = "df94fdc0-0f85-432f-91f2-da9909a96502",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "59f1b15a-d1ff-418c-8add-4f590c0db7d8",
+                            ConcurrencyStamp = "0b97d250-bb01-459d-b9ac-c302328f67fc",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "303b7975-cb1f-498a-9277-5b9393c49cbe",
+                            ConcurrencyStamp = "1ec565cb-c580-4404-bb09-a506968e8662",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -294,7 +294,6 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("EnrollmentId");
@@ -399,6 +398,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -571,9 +575,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.User", "User")
                         .WithMany("Enrollments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("CourseOffering");
 
@@ -611,7 +613,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         .IsRequired();
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
-                        .WithMany("TopicVideo")
+                        .WithMany("TopicVideos")
                         .HasForeignKey("VideoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -649,7 +651,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("TopicVideo");
+                    b.Navigation("TopicVideos");
                 });
 #pragma warning restore 612, 618
         }

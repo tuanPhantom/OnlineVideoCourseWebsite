@@ -12,8 +12,8 @@ using OnlineVideoCourseWebsite.Data;
 namespace _V2__OnlineVideoCourseWebsite.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220516204249_goldv6")]
-    partial class goldv6
+    [Migration("20220519040748_goldv17")]
+    partial class goldv17
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "cc7ebb4a-9c57-4de3-8aaa-11cedfbeb9a1",
+                            ConcurrencyStamp = "df94fdc0-0f85-432f-91f2-da9909a96502",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "5716c408-6ac2-48bf-85fb-ae7f4182500b",
+                            ConcurrencyStamp = "0b97d250-bb01-459d-b9ac-c302328f67fc",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         },
                         new
                         {
                             Id = "3",
-                            ConcurrencyStamp = "ff0504be-7cde-4be2-84e8-7b532f55e0de",
+                            ConcurrencyStamp = "1ec565cb-c580-4404-bb09-a506968e8662",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         });
@@ -355,7 +355,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.ToTable("Topic");
                 });
 
-            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideos", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
                 {
                     b.Property<long>("TopicVideoId")
                         .ValueGeneratedOnAdd()
@@ -375,7 +375,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("TopicVideos");
+                    b.ToTable("TopicVideo");
                 });
 
             modelBuilder.Entity("OnlineVideoCourseWebsite.Models.User", b =>
@@ -400,6 +400,11 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -601,7 +606,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.Navigation("CourseOffering");
                 });
 
-            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideos", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
                         .WithMany("TopicVideos")

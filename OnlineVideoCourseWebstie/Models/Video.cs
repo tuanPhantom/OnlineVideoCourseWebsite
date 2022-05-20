@@ -13,7 +13,7 @@ namespace OnlineVideoCourseWebsite.Models
         public long Duration { get; set; }
         public string Thumbnail { get; set; }
         public string URL { get; set; }
-        public List<TopicVideo> TopicVideo { get; set; } = new List<TopicVideo>();
+        public List<TopicVideo> TopicVideos { get; set; } = new List<TopicVideo>();
         public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

@@ -67,8 +67,8 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(coursesDashBoardViewModel);
         }
 
-        // GET: Courses/Details/5
-        [HttpGet("details")]
+        // GET: Courses/Details/course?id=5&CourseOfferingId=2
+        [HttpGet("course")]
         [Authorize(Roles = "Admin,Instructor,Student")]
         public async Task<IActionResult> Details(long? id, long? CourseOfferingId)
         {
@@ -124,7 +124,7 @@ namespace OnlineVideoCourseWebsite.Controllers
             //{
             //    if (topic.CourseId == course.CourseId)
             //    {
-            //        foreach (var topicvideo in _context.TopicVideo)
+            //        foreach (var topicvideo in _context.TopicVideos)
             //        {
             //            if (topicvideo.TopicId == topic.TopicId)
             //            {
@@ -167,6 +167,7 @@ namespace OnlineVideoCourseWebsite.Controllers
                     .Include(m => m.Topics).Include("Topics.Resources")
                     .FirstOrDefaultAsync();
             }
+
 
             // inject to viewModels
             var courseViewModel = new CourseViewModel()

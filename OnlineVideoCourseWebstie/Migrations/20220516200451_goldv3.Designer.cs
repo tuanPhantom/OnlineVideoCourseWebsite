@@ -355,7 +355,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.ToTable("Topic");
                 });
 
-            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideos", b =>
                 {
                     b.Property<long>("TopicVideoId")
                         .ValueGeneratedOnAdd()
@@ -375,7 +375,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("TopicVideo");
+                    b.ToTable("TopicVideos");
                 });
 
             modelBuilder.Entity("OnlineVideoCourseWebsite.Models.User", b =>
@@ -591,14 +591,14 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                     b.Navigation("CourseOffering");
                 });
 
-            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideo", b =>
+            modelBuilder.Entity("OnlineVideoCourseWebsite.Models.TopicVideos", b =>
                 {
                     b.HasOne("OnlineVideoCourseWebsite.Models.Topic", "Topic")
                         .WithMany("TopicVideos")
                         .HasForeignKey("TopicId");
 
                     b.HasOne("OnlineVideoCourseWebsite.Models.Video", "Video")
-                        .WithMany("TopicVideo")
+                        .WithMany("TopicVideos")
                         .HasForeignKey("VideoId");
 
                     b.Navigation("Topic");
@@ -634,7 +634,7 @@ namespace _V2__OnlineVideoCourseWebsite.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("TopicVideo");
+                    b.Navigation("TopicVideos");
                 });
 #pragma warning restore 612, 618
         }
