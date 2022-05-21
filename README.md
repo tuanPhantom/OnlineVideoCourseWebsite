@@ -8,6 +8,6 @@ Nguyễn Thị Mỹ Duyên
 Hà Thị Ngọc Lan
 Trương Quốc Đạt
 
-## Research paper is available via Google Grive:
+## Our Research paper is available on Google Drive:
 https://drive.google.com/file/d/1ofYCjV-ZoOHCKT98mTY_8OjDBKNCmou5/view?usp=sharing
 
