@@ -11,6 +11,6 @@ Group 3:
   <li>Trương Quốc Đạt</li>
 </ul>
 
-## Our Research paper is available on Google Drive:
+## Our research paper is available on Google Drive:
 https://drive.google.com/file/d/1ofYCjV-ZoOHCKT98mTY_8OjDBKNCmou5/view?usp=sharing
 
