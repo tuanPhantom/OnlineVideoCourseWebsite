@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -12,6 +13,7 @@ using Newtonsoft.Json;
 using OnlineVideoCourseWebsite.Common;
 using OnlineVideoCourseWebsite.Data;
 using OnlineVideoCourseWebsite.Models;
+using OnlineVideoCourseWebsite.Models.ViewModels;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
@@ -53,23 +55,29 @@ namespace OnlineVideoCourseWebsite.Controllers
         }
 
 
-        // GET: Enrollments/Create/
-        public IActionResult Create()
+        [HttpGet("Enrollments/Create/")]
+        // GET: Enrollments/Create/?courseId=5&haveEnrolledAtLeastOnce=true&courseOfferingId=2
+        public IActionResult Create(long courseId, bool haveEnrolledAtLeastOnce, long courseOfferingId)
         {
-            long CourseId = JsonConvert.DeserializeObject<long>(TempData["courseId"].ToString());
-            //List<CourseOffering> CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == CourseId)
+            //long courseId = JsonConvert.DeserializeObject<long>(TempData["courseId"].ToString());
+            //List<CourseOffering> courseOfferings = _context.CourseOffering.Where(m => m.CourseId == CourseId)
             //    .Where(m => m.Enrollments.Where(m => m.UserId == BinPattern.Bin["uid"].ToString()).FirstOrDefault() == null)
             //    .ToList();
             List<CourseOffering> CourseOfferings;
-            if ((bool)BinPattern.Bin["haveEnrolledAtLeastOnce"] == false)
+            //if ((bool)BinPattern.Bin["haveEnrolledAtLeastOnce"] == false)
+            if (!haveEnrolledAtLeastOnce)
             {
-                CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == CourseId).ToList();
+                CourseOfferings = _context.CourseOffering.Where(m => m.CourseId == courseId).ToList();
             }
             else
             {
-                CourseOfferings = _context.CourseOffering.Where(m => m.CourseOfferingId == JsonConvert.DeserializeObject<long>(TempData["CourseOfferingId"].ToString())).ToList();
+                //CourseOfferings = _context.CourseOffering.Where(m => m.CourseOfferingId == JsonConvert.DeserializeObject<long>(TempData["CourseOfferingId"].ToString())).ToList();
+                CourseOfferings = _context.CourseOffering.Where(m => m.CourseOfferingId == courseOfferingId).ToList();
             }
             ViewBag.CourseOfferingId = new SelectList(CourseOfferings, "CourseOfferingId", "Year");
+
+            var course = _context.Course.Where(m => m.CourseId == courseId).FirstOrDefault();
+            ViewData["courseName"] = course.Title;
             return View();
         }
 
@@ -80,17 +88,16 @@ namespace OnlineVideoCourseWebsite.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnrollmentId,CourseOfferingId")] Enrollment enrollment)
         {
-            enrollment.UserId = TempData["userId"].ToString();
+            enrollment.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             enrollment.User = await _context.User.Where(m => m.Id == enrollment.UserId).FirstOrDefaultAsync();
             if (ModelState.IsValid)
             {
                 _context.Add(enrollment);
                 await _context.SaveChangesAsync();
                 enrollment.CourseOffering = await _context.CourseOffering.Where(m => m.CourseOfferingId == enrollment.CourseOfferingId).FirstOrDefaultAsync();
-                return Redirect(TempData["url"].ToString());
+                return Redirect("/course?id=" + enrollment.CourseOffering.CourseId + "&CourseOfferingId=" + enrollment.CourseOfferingId);
             }
             ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);
             return View(enrollment);
         }
 
@@ -142,7 +149,7 @@ namespace OnlineVideoCourseWebsite.Controllers
                         throw;
                     }
                 }
-                return Redirect(TempData["url"].ToString());
+                return Redirect("/course?id=" + enrollment.CourseOffering.CourseId + "&CourseOfferingId=" + enrollment.CourseOfferingId);
             }
             ViewBag.CourseOfferingId = new SelectList(_context.CourseOffering, "CourseOfferingId", "Year", enrollment.CourseOfferingId);
             ViewBag.UserId = new SelectList(_context.User, "Id", "UserName", enrollment.UserId);

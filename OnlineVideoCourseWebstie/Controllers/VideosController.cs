@@ -29,7 +29,7 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(await _context.Video.ToListAsync());
         }
 
-        // GET: Videos/Details/vid?id=5&topicid=1
+        // GET: Videos/Details/  ->   /vid?id=5&topicid=1
         [HttpGet("vid")]
         public async Task<IActionResult> Details(long? id, long topicid)
         {

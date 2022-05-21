@@ -67,7 +67,7 @@ namespace OnlineVideoCourseWebsite.Controllers
             return View(coursesDashBoardViewModel);
         }
 
-        // GET: Courses/Details/course?id=5&CourseOfferingId=2
+        // GET: Courses/Details/  ->  /course?id=5&CourseOfferingId=2
         [HttpGet("course")]
         [Authorize(Roles = "Admin,Instructor,Student")]
         public async Task<IActionResult> Details(long? id, long? CourseOfferingId)
@@ -100,23 +100,26 @@ namespace OnlineVideoCourseWebsite.Controllers
                 .Where(m => m.CourseOffering.CourseId == id)
                 .ToListAsync();
 
+            
             if (enrollments == null || enrollments.Where(m => (m.CourseOfferingId != CourseOfferingId) && CourseOfferingId != null).ToList().Count == enrollments.Count)
             {
-                TempData["courseId"] = JsonConvert.SerializeObject(id);
-                TempData["userId"] = userId;
-                TempData["courseName"] = course.Title;
-                TempData["url"] = Request.GetDisplayUrl();
+                //TempData["courseId"] = JsonConvert.SerializeObject(id);
+                //TempData["userId"] = userId;
+                //TempData["courseName"] = course.Title;
+                //TempData["url"] = Request.GetDisplayUrl();
                 //BinPattern.Bin["uid"] = userId;
                 if (enrollments.Count == 0)
                 {
-                    BinPattern.Bin["haveEnrolledAtLeastOnce"] = false;
+                    //BinPattern.Bin["haveEnrolledAtLeastOnce"] = false;
+                    return Redirect("/Enrollments/Create/?courseId=" + id + "&haveEnrolledAtLeastOnce=" + false);
                 }
                 else
                 {
-                    BinPattern.Bin["haveEnrolledAtLeastOnce"] = true;
-                    TempData["CourseOfferingId"] = JsonConvert.SerializeObject(CourseOfferingId);
+                    //BinPattern.Bin["haveEnrolledAtLeastOnce"] = true;
+                    //TempData["CourseOfferingId"] = JsonConvert.SerializeObject(CourseOfferingId);
+                    return Redirect("/Enrollments/Create/?courseId=" + id + "&haveEnrolledAtLeastOnce=" + true + "&CourseOfferingId=" + CourseOfferingId);
                 }
-                return Redirect("/Enrollments/Create/");
+                //return Redirect("/Enrollments/Create/");
             }
 
             //var course = await _context.Course.FindAsync(id);

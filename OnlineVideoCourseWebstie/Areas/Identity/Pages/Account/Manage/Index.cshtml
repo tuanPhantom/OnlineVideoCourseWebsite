@@ -8,8 +8,8 @@
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-	<div class="card text-center" style="width: 18rem;">
-		<img src="@Model.Input.Thumbnail" class="img-thumbnail" alt="Thumbnail">
+	<div class="card text-center" style="width: 18rem; height: 23.15rem">
+		<img src="@Model.Thumbnail" class="img-fluid" alt="Thumbnail">
 		<div class="card-body">
 			<h5 class="card-title">Avatar</h5>
 		</div>
@@ -31,6 +31,11 @@
 				<input asp-for="Input.FullName" class="form-control" />
 				<label asp-for="Input.FullName" class="form-label"></label>
 				<span asp-validation-for="Input.FullName" class="text-danger"></span>
+			</div>
+			<div class="form-floating">
+				<input asp-for="Input.Description" class="form-control" />
+				<label asp-for="Input.Description" class="form-label"></label>
+				<span asp-validation-for="Input.Description" class="text-danger"></span>
 			</div>
 			<div class="form-floating">
 				<input asp-for="Input.PhoneNumber" class="form-control" />

@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using OnlineVideoCourseWebsite.Data;
 using OnlineVideoCourseWebsite.Models;
 using Microsoft.AspNetCore.Authorization;
+using OnlineVideoCourseWebsite.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 
 namespace OnlineVideoCourseWebsite.Controllers
 {
@@ -16,16 +18,33 @@ namespace OnlineVideoCourseWebsite.Controllers
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            var users = await _userManager.Users.ToListAsync();
+            var userViewModels = new List<UserViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await GetUserRoles(user);
+                var model = new UserViewModel
+                {
+                    User = user,
+                    Role = roles.ToList()[0]
+                };
+                userViewModels.Add(model);
+            }
+            return View(userViewModels);
         }
 
         // GET: Users/Details/5
@@ -43,29 +62,56 @@ namespace OnlineVideoCourseWebsite.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            var roles = await GetUserRoles(user);
+            var model = new UserViewModel
+            {
+                User = user,
+                Role = roles.ToList()[0]
+            };
+
+            return View(model);
         }
 
         // GET: Users/Create
         public IActionResult Create()
         {
-            return View();
+            var model = new UserViewModel();
+            ViewBag.Roles = new SelectList(_roleManager.Roles, "Name", "Name");
+            return View(model);
         }
+
+        // Model as parameter
+        [BindProperties]
+        public class GetRequest
+        {
+            public User User { get; set; }
+            public string Role { get; set; }
+        }
+
 
         // POST: Users/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FullName,Description,Thumbnail,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Create(GetRequest getRequest)
         {
+            var user = getRequest.User;
+
             if (ModelState.IsValid)
             {
+                //await _userManager.CreateAsync(user, user.PasswordHash);
                 _context.Add(user);
                 await _context.SaveChangesAsync();
+                await _userManager.AddToRoleAsync(user, getRequest.Role);
+                await _userManager.UpdateAsync(user);
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+
+            var model = new UserViewModel();
+            ViewBag.Roles = new SelectList(_roleManager.Roles, "Name", "Name");
+            return View(model);
         }
 
         // GET: Users/Edit/5
@@ -81,7 +127,16 @@ namespace OnlineVideoCourseWebsite.Controllers
             {
                 return NotFound();
             }
-            return View(user);
+
+            var roles = await GetUserRoles(user);
+            var model = new UserViewModel
+            {
+                User = user,
+                Role = roles.ToList()[0]
+            };
+
+            ViewBag.Roles = new SelectList(_roleManager.Roles, "Name", "Name", model.Role);
+            return View(model);
         }
 
         // POST: Users/Edit/5
@@ -89,8 +144,9 @@ namespace OnlineVideoCourseWebsite.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("FullName,Description,Thumbnail,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Edit(string id, GetRequest getRequest)
         {
+            var user = getRequest.User;
             if (id != user.Id)
             {
                 return NotFound();
@@ -114,9 +170,25 @@ namespace OnlineVideoCourseWebsite.Controllers
                         throw;
                     }
                 }
+
+                // delete old role then add new one
+                var oldRole = await GetUserRoles(user);
+                await _userManager.RemoveFromRoleAsync(user, oldRole[0]);
+                await _userManager.AddToRoleAsync(user, getRequest.Role);
+                await _userManager.UpdateAsync(user);
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+
+            var roles = await GetUserRoles(user);
+            var model = new UserViewModel
+            {
+                User = user,
+                Role = roles.ToList()[0]
+            };
+
+            ViewBag.Roles = new SelectList(_roleManager.Roles, "Name", "Name", model.Role);
+            return View(model);
         }
 
         // GET: Users/Delete/5
@@ -134,7 +206,13 @@ namespace OnlineVideoCourseWebsite.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            var roles = await GetUserRoles(user);
+            var model = new UserViewModel
+            {
+                User = user,
+                Role = roles.ToList()[0]
+            };
+            return View(model);
         }
 
         // POST: Users/Delete/5
@@ -151,6 +229,22 @@ namespace OnlineVideoCourseWebsite.Controllers
         private bool UserExists(string id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        private async Task<List<string>> GetUserRoles(User user)
+        {
+            return new List<string>(await _userManager.GetRolesAsync(user));
+        }
+
+        private async Task<List<string>> GetAllRoles()
+        {
+            var list = new List<string>();
+            var roles = await _roleManager.Roles.ToListAsync();
+            foreach (var role in roles)
+            {
+                list.Add(role.Name);
+            }
+            return list;
         }
     }
 }

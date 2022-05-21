@@ -30,13 +30,15 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<User> userManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -83,7 +86,6 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
             [MaxLength(80), Required]
             [Display(Name = "FullName")]
             public string FullName { get; set; }
-
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -140,6 +142,10 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+
+                    await AddStudentRole(userId);
+
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
@@ -184,6 +190,24 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
             return (IUserEmailStore<User>)_userStore;
+        }
+
+        public async Task AddStudentRole(string userId)
+        {
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return;
+            }
+
+            var role = _roleManager.Roles.Where(r => r.Name.Equals("Student")).FirstOrDefault();
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "Cannot add selected roles to user");
+                return;
+            }
         }
     }
 }

@@ -39,6 +39,8 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
 
         public string Thumbnail { get; set; }
 
+        public string Description { get; set; }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
@@ -74,6 +76,9 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
             [MaxLength(1024)]
             [Display(Name = "Thumbnail")]
             public string Thumbnail { get; set; }
+            [MaxLength(1024)]
+            [Display(Name = "Description")]
+            public string Description { get; set; }
         }
 
         private async Task LoadAsync(User user)
@@ -82,15 +87,17 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
 
             Username = userName;
-            string tmpName = user.FullName;
-            FullName = !tmpName.Equals(Constants.UnregisteredUser) ? tmpName : null;
+            FullName = user.FullName;
+            string thumbnail = user.Thumbnail;
             Thumbnail = user.Thumbnail;
+            Description = user.Description;
 
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
                 FullName = FullName,
-                Thumbnail = Thumbnail
+                Thumbnail = !thumbnail.Equals(Constants.UnregisteredUser) ? thumbnail : null,
+                Description = Description
             };
         }
 
@@ -127,11 +134,19 @@ namespace OnlineVideoCourseWebsite.Areas.Identity.Pages.Account.Manage
                 await _userManager.UpdateAsync(user);
             }
 
-            // update thumbnail
+            // update Tthumbnail
             var thumbNail = Input.Thumbnail;
             if (thumbNail != null && !thumbNail.Equals(user.Thumbnail))
             {
                 user.Thumbnail = thumbNail;
+                await _userManager.UpdateAsync(user);
+            }
+
+            // update Description 
+            var Description = Input.Description;
+            if (Description != null && !Description.Equals(user.Description))
+            {
+                user.Description = Description;
                 await _userManager.UpdateAsync(user);
             }
 
