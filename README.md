@@ -1,12 +1,15 @@
 # Online Video Course Website
-Group 3 - Group project for SS208 and SCICT 2022
+Group project for SS208 and SCICT 2022
 
 ## Authors:
-Phan Quang Tuấn
-Nguyễn Tuấn Nghĩa
-Nguyễn Thị Mỹ Duyên
-Hà Thị Ngọc Lan
-Trương Quốc Đạt
+Group 3:
+<ul>
+  <li>Phan Quang Tuấn</li>
+  <li>Nguyễn Tuấn Nghĩa</li>
+  <li>Nguyễn Thị Mỹ Duyên</li>
+  <li>Hà Thị Ngọc Lan</li>
+  <li>Trương Quốc Đạt</li>
+</ul>
 
 ## Our Research paper is available on Google Drive:
 https://drive.google.com/file/d/1ofYCjV-ZoOHCKT98mTY_8OjDBKNCmou5/view?usp=sharing
