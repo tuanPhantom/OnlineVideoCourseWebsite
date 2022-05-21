@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Resource>
+
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="@item.URL" target="_blank">
+                <i class="material-icons">save_alt</i>
+                <span>&nbsp;@item.Title</span>
+            </a>
+        </li>
+    }
+</ul>

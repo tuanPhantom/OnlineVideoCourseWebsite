@@ -1,0 +1,85 @@
+﻿@model OnlineVideoCourseWebsite.Models.ViewModels.CourseViewModel
+@using OnlineVideoCourseWebsite.Models
+
+@{
+	ViewData["Title"] = "Details";
+}
+
+<div class="row small-bottom-margin">
+	<div class="col-sm-12">
+		<a class="btn btn-primary" asp-action="Index">
+			<span>Back to Dashboard</span>
+		</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card no-border-radius">
+			<div class="marquee" style="background-image:url('@Model.Course.MarqueeImageUrl');">
+				<img src="@Model.Course.ImageUrl">
+			</div>
+			<div class="card-body">
+				<h1 class="card-title">@Model.Course.Title</h1>
+				<h4 class="card-text">
+					@Model.Course.Description
+				</h4>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="dropdown">
+	<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+		Your Course Offering: @Model.Course.Title @Model.CourseOffering.Year
+	</a>
+
+	<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+		@foreach (var item in Model.Course.CourseOfferings)
+		{
+			<li><a class="dropdown-item" href="/course?id=@Model.Course.CourseId&CourseOfferingId=@item.CourseOfferingId">@item.Year</a></li>
+		}
+	</ul>
+</div>
+
+
+<div class="row">
+	<div class="col-md-9">
+		@*Add modules here*@
+		@foreach (var topic in Model.CourseOffering.Topics)
+		{
+			<div class="card small-top-margin no-border-radius">
+				<div class="card-body">
+					<h5>@topic.Title</h5>
+				</div>
+				<hr class="no-margin">
+				@if (topic.TopicVideos != null && topic.TopicVideos.Count > 0)
+				{
+					@foreach (var topicVideo in topic.TopicVideos)
+					{
+						<partial name="_TopicVideosPartial" model=@topicVideo />
+					}
+				}
+
+				@if (topic.Resources != null && topic.Resources.Count > 0)
+				{
+					<hr class="no-margin">
+					<div class="card-body no-bottom-padding">
+						<h5>Resources</h5>
+					</div>
+					<div class="card-body no-top-padding">
+						<partial name="_ModuleResourcesPartial" model="@topic.Resources" />
+					</div>
+				}
+			</div>
+		}
+	</div>
+	@*<div class="col-md-3">
+		@*Add instructor bio here
+		@if (Model.Instructor != null)
+		{
+		<partial name="_InstructorBioPartial" model="@Model.Instructor" />
+		}
+		</div>*@
+</div>
