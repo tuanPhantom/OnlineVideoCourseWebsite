@@ -1,6 +1,15 @@
 # Online Video Course Website
 Group project for SS208 and SCICT 2022
 
+## Login Accounts:
+Username / password
+
+- Admin: <br/> Admin@8c / Admin@8c
+
+- Instructor: <br/> Instructor@8c / Instructor@8c
+
+- Student: <br/> Student@8c / Student@8c
+
 ## Authors:
 Group 3:
 <ul>
@@ -11,6 +20,6 @@ Group 3:
   <li>Trương Quốc Đạt</li>
 </ul>
 
-## Our research paper is available on Google Drive:
+## All the requirements are included in our research paper:
 https://drive.google.com/file/d/1ofYCjV-ZoOHCKT98mTY_8OjDBKNCmou5/view?usp=sharing
 
